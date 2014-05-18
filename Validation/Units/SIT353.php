@@ -1,8 +1,8 @@
 <?php
 include_once 'Unit.php';
 
-class MIS352 extends Unit {
-	private $prerequisites = array("MIS101");
+class SIT353 extends Unit {
+	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array();
 
@@ -11,7 +11,7 @@ class MIS352 extends Unit {
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+		return "Must have completed 4 units in SIT151, SIT152, SIT153, SIT251, SIT252, SIT253, SIT254, SIT255, SIT352, SIT354";
 	}
 	
 	public function getCorequisites() {
@@ -23,13 +23,18 @@ class MIS352 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		if (count($this->prerequisites) > 0) {
-			foreach ($this->prerequisites as $pre) {
-				if (!in_array($pre, $table)) {
-					return false;
-				}
+		$pre = ["SIT151","SIT152","SIT153","SIT251","SIT252","SIT253","SIT254","SIT255","SIT352","SIT354"];
+		$count = 0;
+		foreach ($pre as $p) {
+			if (in_array($p, $table)) {
+				$count++;
 			}
+			if ($count >= 4)
+				break;
 		}
+		if ($count < 4)
+			return false;
+			
 		return true;
 	}
 	

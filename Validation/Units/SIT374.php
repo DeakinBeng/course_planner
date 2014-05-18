@@ -1,17 +1,17 @@
 <?php
 include_once 'Unit.php';
 
-class MIS352 extends Unit {
-	private $prerequisites = array("MIS101");
-	private $corequisites = array();
-	private $incompatibilities = array();
+class SIT374 extends Unit {
+	private $prerequisites = array();
+	private $corequisites = array("SIT105");
+	private $incompatibilities = array("MIS398");
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
 		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+		return "Must have completed 15 credit points of study";
 	}
 	
 	public function getCorequisites() {
@@ -23,12 +23,8 @@ class MIS352 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		if (count($this->prerequisites) > 0) {
-			foreach ($this->prerequisites as $pre) {
-				if (!in_array($pre, $table)) {
-					return false;
-				}
-			}
+		if (count($table) < 15) {
+			return false;
 		}
 		return true;
 	}

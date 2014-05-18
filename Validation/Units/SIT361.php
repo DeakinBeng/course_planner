@@ -1,21 +1,21 @@
 <?php
 include_once 'Unit.php';
 
-class MIS352 extends Unit {
-	private $prerequisites = array("MIS101");
+class SIT361 extends Unit {
+	private $prerequisites = array();
 	private $corequisites = array();
-	private $incompatibilities = array();
+	private $incompatibilities = array("MSC301");
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
 		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+		return "Two SIT level 2 coded units (excluding mathematics units coded SIT19-, SIT29-, SIT39-) or one SIT level 2 coded unit and MSC228 (excluding mathematics units coded SIT19-, SIT29-, SIT39-)";
 	}
 	
 	public function getCorequisites() {
-		return implode(", ", $this->corequisites);
+		return "One of SIT363 or SIT262";
 	}
 	
 	public function getIncompatibilities() {
@@ -23,24 +23,28 @@ class MIS352 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		if (count($this->prerequisites) > 0) {
-			foreach ($this->prerequisites as $pre) {
-				if (!in_array($pre, $table)) {
-					return false;
+		$count = 0;
+		if (in_array("MSC228", $table))
+			$count++;
+		foreach ($table as $unit) {
+			if (strpos($unit, "SIT") !== false && substr($unit, 3, 1) == "2") {
+				if (substr($unit, 4, 1) !== "9") {
+					$count++;
 				}
 			}
+			
+			if ($count >= 2)
+				break;
 		}
+		
+		if ($count < 2)
+			return false;
 		return true;
 	}
 	
 	protected function validateCorequisites($table) {
-		if (count($this->corequisites) > 0) {
-			foreach ($this->corequisites as $cor) {
-				if (!in_array($cor, $table)) {
-					return false;
-				}
-			}
-		}
+		if (!in_array("SIT363", $table) && !in_array("SIT262", $table))
+			return false;
 		return true;
 	}
 	

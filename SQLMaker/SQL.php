@@ -57,23 +57,23 @@ function getUnitsSQL($units) {
 				for ($i = 1; $i < count($trimesters); $i++) {
 					$trimesterNo = substr($trimesters[$i], 0, 2);
 					
-					if (strpos($trimesters[$i], "Burwood")) {
+					if (strpos($trimesters[$i], "Burwood") !== false) {
 						$burwood[$trimesterNo-1] = 1;
 						$b = true;
 					}
-					if (strpos($trimesters[$i], "Warrnambool")) {
+					if (strpos($trimesters[$i], "Warrnambool") !== false) {
 						$w3 = true;
 						$warrnambool[$trimesterNo-1] = 1;
 					}
-					if (strpos($trimesters[$i], "Waterfront")) {
+					if (strpos($trimesters[$i], "Waterfront") !== false) {
 						$waterfront[$trimesterNo-1] = 1;
 						$w1 = true;
 					}
-					if (strpos($trimesters[$i], "Waurn")) {
+					if (strpos($trimesters[$i], "Waurn") !== false) {
 						$w2 = true;
 						$waurn[$trimesterNo-1] = 1;
 					}
-					if (strpos($trimesters[$i], "Cloud")) {
+					if (strpos($trimesters[$i], "Cloud") !== false) {
 						$c = true;
 						$cloud[$trimesterNo-1] = 1;
 					}
@@ -192,7 +192,7 @@ function getCoursesSQL($courses) {
 			}
 		}
 		
-		if (strpos($campusoffering, "Burwood")) {
+		if (strpos($campusoffering, "Burwood") !== false) {
 		$availstr = $availstr . "INSERT INTO `Campus_Course_Offerings` (
 		`Campus_ID`,
 		`Course_Code`
@@ -201,7 +201,7 @@ function getCoursesSQL($courses) {
 		\"" . $coursecode . "\"
 			);<br />";
 		}
-		if (strpos($campusoffering, "Waterfront")) {
+		if (strpos($campusoffering, "Waterfront") !== false) {
 		$availstr = $availstr . "INSERT INTO `Campus_Course_Offerings` (
 		`Campus_ID`,
 		`Course_Code`
@@ -210,7 +210,7 @@ function getCoursesSQL($courses) {
 		\"" . $coursecode . "\"
 			);<br />";
 		}
-		if (strpos($campusoffering, "Waurn")) {
+		if (strpos($campusoffering, "Waurn") !== false) {
 		$availstr = $availstr . "INSERT INTO `Campus_Course_Offerings` (
 		`Campus_ID`,
 		`Course_Code`
@@ -219,7 +219,7 @@ function getCoursesSQL($courses) {
 		\"" . $coursecode . "\"
 			);<br />";
 		}
-		if (strpos($campusoffering, "Warrnambool")) {
+		if (strpos($campusoffering, "Warrnambool") !== false) {
 		$availstr = $availstr . "INSERT INTO `Campus_Course_Offerings` (
 		`Campus_ID`,
 		`Course_Code`
@@ -228,7 +228,7 @@ function getCoursesSQL($courses) {
 		\"" . $coursecode . "\"
 			);<br />";
 		}
-		if (strpos($campusoffering, "Cloud")) {
+		if (strpos($campusoffering, "Cloud") !== false) {
 		$availstr = $availstr . "INSERT INTO `Campus_Course_Offerings` (
 		`Campus_ID`,
 		`Course_Code`

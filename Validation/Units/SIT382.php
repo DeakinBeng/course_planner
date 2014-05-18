@@ -1,8 +1,8 @@
 <?php
 include_once 'Unit.php';
 
-class MIS352 extends Unit {
-	private $prerequisites = array("MIS101");
+class SIT382 extends Unit {
+	private $prerequisites = array("SIT182", "SIT202");
 	private $corequisites = array();
 	private $incompatibilities = array();
 
