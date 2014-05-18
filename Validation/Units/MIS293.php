@@ -2,7 +2,6 @@
 include_once 'Unit.php';
 
 class MIS293 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array();
@@ -12,7 +11,8 @@ class MIS293 extends Unit {
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "Completion of 8 credit points prior to commencing placement";
 	}
 	
 	public function getCorequisites() {

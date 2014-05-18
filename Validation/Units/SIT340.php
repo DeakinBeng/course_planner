@@ -2,21 +2,21 @@
 include_once 'Unit.php';
 
 class SIT340 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
-	private $incompatibilities = array();
+	private $incompatibilities = array("SIT740");
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
 		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
    }
    
    	public function getPrerequisites() {
+	
 		return implode(", ", $this->prerequisites);
 	}
 	
 	public function getCorequisites() {
-		return implode(", ", $this->corequisites);
+		return "Any two level 2 SIT coded units";
 	}
 	
 	public function getIncompatibilities() {

@@ -2,7 +2,6 @@
 include_once 'Unit.php';
 
 class SIT190 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array();
@@ -12,7 +11,8 @@ class SIT190 extends Unit {
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "Students who have successfully completed VCE Maths Methods 3 and 4 and/or Specialist Maths 3 and 4 are not normally eligible to enrol in this unit.";
 	}
 	
 	public function getCorequisites() {

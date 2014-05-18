@@ -2,9 +2,8 @@
 include_once 'Unit.php';
 
 class SIT363 extends Unit {
-
 	private $prerequisites = array();
-	private $corequisites = array();
+	private $corequisites = array("SIT161");
 	private $incompatibilities = array();
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
@@ -12,7 +11,8 @@ class SIT363 extends Unit {
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "Two SIT coded units (excluding mathematics units coded SIT19-, SIT29-, SIT39-) or one SIT coded unit and MSC228 (excluding mathematics units coded SIT19-, SIT29-, SIT39-)";
 	}
 	
 	public function getCorequisites() {

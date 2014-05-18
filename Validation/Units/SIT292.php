@@ -2,7 +2,6 @@
 include_once 'Unit.php';
 
 class SIT292 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array();
@@ -12,7 +11,8 @@ class SIT292 extends Unit {
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "Any one of SCM113, SCM130 or SIT192";
 	}
 	
 	public function getCorequisites() {

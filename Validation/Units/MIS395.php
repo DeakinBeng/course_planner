@@ -2,9 +2,8 @@
 include_once 'Unit.php';
 
 class MIS395 extends Unit {
-
 	private $prerequisites = array();
-	private $corequisites = array();
+	private $corequisites = array("MIS394");
 	private $incompatibilities = array();
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
@@ -12,6 +11,7 @@ class MIS395 extends Unit {
    }
    
    	public function getPrerequisites() {
+	
 		return implode(", ", $this->prerequisites);
 	}
 	

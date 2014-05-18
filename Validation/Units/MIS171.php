@@ -2,7 +2,6 @@
 include_once 'Unit.php';
 
 class MIS171 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array("SIT191");
@@ -12,6 +11,7 @@ class MIS171 extends Unit {
    }
    
    	public function getPrerequisites() {
+	
 		return implode(", ", $this->prerequisites);
 	}
 	

@@ -2,17 +2,17 @@
 include_once 'Unit.php';
 
 class SIT232 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
-	private $incompatibilities = array();
+	private $incompatibilities = array("SIT131");
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
 		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "SIT102 or SIT153";
 	}
 	
 	public function getCorequisites() {

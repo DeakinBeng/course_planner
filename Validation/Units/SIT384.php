@@ -2,8 +2,7 @@
 include_once 'Unit.php';
 
 class SIT384 extends Unit {
-
-	private $prerequisites = array();
+	private $prerequisites = array("SIT284");
 	private $corequisites = array();
 	private $incompatibilities = array();
 
@@ -12,6 +11,7 @@ class SIT384 extends Unit {
    }
    
    	public function getPrerequisites() {
+	
 		return implode(", ", $this->prerequisites);
 	}
 	

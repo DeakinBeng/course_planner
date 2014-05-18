@@ -2,17 +2,17 @@
 include_once 'Unit.php';
 
 class SIT374 extends Unit {
-
 	private $prerequisites = array();
-	private $corequisites = array();
-	private $incompatibilities = array();
+	private $corequisites = array("SIT105");
+	private $incompatibilities = array("MIS398");
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
 		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "Must have completed 15 credit points of study";
 	}
 	
 	public function getCorequisites() {

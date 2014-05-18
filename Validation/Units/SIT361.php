@@ -2,21 +2,21 @@
 include_once 'Unit.php';
 
 class SIT361 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
-	private $incompatibilities = array();
+	private $incompatibilities = array("MSC301");
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
 		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "Two SIT level 2 coded units (excluding mathematics units coded SIT19-, SIT29-, SIT39-) or one SIT level 2 coded unit and MSC228 (excluding mathematics units coded SIT19-, SIT29-, SIT39-)";
 	}
 	
 	public function getCorequisites() {
-		return implode(", ", $this->corequisites);
+		return "One of SIT363 or SIT262";
 	}
 	
 	public function getIncompatibilities() {

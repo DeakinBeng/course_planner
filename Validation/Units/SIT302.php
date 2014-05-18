@@ -2,21 +2,21 @@
 include_once 'Unit.php';
 
 class SIT302 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
-	private $incompatibilities = array();
+	private $incompatibilities = array("SCM363","MSC303","MIS399");
 
 	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
 		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "Must have passed five SIT level 2 or 3 coded units.&nbsp; Students enrolled in S325, S326, S329, D320 and D375 are expected to have completed at least 4 credit points of an IT major sequence.";
 	}
 	
 	public function getCorequisites() {
-		return implode(", ", $this->corequisites);
+		return "SIT301 or SIT374 or MIS398";
 	}
 	
 	public function getIncompatibilities() {

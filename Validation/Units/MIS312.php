@@ -2,7 +2,6 @@
 include_once 'Unit.php';
 
 class MIS312 extends Unit {
-
 	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array();
@@ -12,7 +11,8 @@ class MIS312 extends Unit {
    }
    
    	public function getPrerequisites() {
-		return implode(", ", $this->prerequisites);
+	
+		return "One unit at level 2 plus one of MIS101 or SIT101 (MIS101 previously coded MSC120)";
 	}
 	
 	public function getCorequisites() {
