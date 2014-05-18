@@ -16,7 +16,7 @@ class MIS398 extends Unit {
 	}
 	
 	public function getCorequisites() {
-		return "Nil.";
+		return implode(", ", $this->corequisites);
 	}
 	
 	public function getIncompatibilities() {
