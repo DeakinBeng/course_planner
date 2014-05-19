@@ -25,11 +25,11 @@ class MIS312 extends Unit {
 	
 	protected function validatePrerequisites($table) {
 		if (count($this->prerequisites) > 0) {
-			foreach ($this->prerequisites as $pre) {
-				if (!in_array($pre, $table)) {
+		//Needs a level 2 identifier?
+				if (!in_array("MIS101", $table) || !in_array("SIT101", $table)) {
 					return false;
 				}
-			}
+			
 		}
 		return true;
 	}

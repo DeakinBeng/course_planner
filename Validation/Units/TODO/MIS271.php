@@ -1,7 +1,7 @@
 <?php
 include_once 'Unit.php';
 
-class MIS394 extends Unit {
+class MIS271 extends Unit {
 	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array();
@@ -12,7 +12,7 @@ class MIS394 extends Unit {
    
    	public function getPrerequisites() {
 	
-		return "Completion of 16 credit points prior to starting placement";
+		return "MIS101, MSC120 or SIT101";
 	}
 	
 	public function getCorequisites() {
@@ -24,13 +24,10 @@ class MIS394 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		if (count($table) < 16) {
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+				if (!in_array("MIS101", $table) && !in_array("MSC120", $table) && !in_array("SIT101", $table)) {
+					return false;
+				}
+		return true;
 	}
 	
 	protected function validateCorequisites($table) {

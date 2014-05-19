@@ -47,11 +47,9 @@ class MIS398 extends Unit {
 	
 	protected function validateIncompatibilities($table) {
 		if (count($this->incompatibilities) > 0) {
-			foreach ($this->incompatibilities as $inc) {
-				if (in_array($inc, $table)) {
+				if (in_array("SIT374", $table)) {
 					return false;
 				}
-			}
 		}
 		return true;
 	}

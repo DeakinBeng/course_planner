@@ -24,12 +24,8 @@ class MIS390 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		if (count($this->prerequisites) > 0) {
-			foreach ($this->prerequisites as $pre) {
-				if (!in_array($pre, $table)) {
-					return false;
-				}
-			}
+		if (count($table) < 12) {
+			return false;
 		}
 		return true;
 	}
