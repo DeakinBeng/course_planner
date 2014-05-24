@@ -48,19 +48,7 @@
 				<input type="submit" id="btnSearch" name="btnSearch" value="Search" />
 			</form>
 		</div>
-	</div>
-	
-	<div class="page-main">
-		<div class="course-info">
-			<!-- Display information from previous post data stored in Session -->
-			COURSE CODE : <?php echo @$_SESSION['course_selection']; ?><br/>
-			COURSE NAME : <?php echo @$_SESSION['course_name']; ?><br/>
-			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
-			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?>
-		</div>
-	</div>
-
-	<div class="left-sidebar">
+		
 		<br/>
 		<div class="left">
 			<table>
@@ -77,9 +65,18 @@
 				?>
 			</table>
 		</div>
+		<p>Course Status: <span id="course-status">Incomplete</span></p>
 	</div>
 	
 	<div class="page-main">
+		<div class="course-info">
+			<!-- Display information from previous post data stored in Session -->
+			COURSE CODE : <?php echo @$_SESSION['course_selection']; ?><br/>
+			COURSE NAME : <?php echo @$_SESSION['course_name']; ?><br/>
+			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
+			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?>
+		</div>
+	
 		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
 		<div class="right">
 			<table>
@@ -130,6 +127,10 @@
 					<td class="drop"></td>
 				</tr>
 			</table>
+		</div>
+		<div class="button-right">
+			<input type="button" id="btnSave" name="btnSave" value="SAVE" />
+			<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />
 		</div>
 	</div>
 	
