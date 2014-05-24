@@ -1,0 +1,5 @@
+references:
+
+Creating a school Timetable, retrieved 23 May 2014, < http://www.jeasyui.com/tutorial/dd/dnd3.php >
+Placeholder for dynamic dropdown menu, retrieved 23 May 2014 < http://stackoverflow.com/questions/22414283/placeholder-for-dynamic-dropdown-menu >
+Loading a Drop Down List Using jQuery, retrieved 23 May 2014 < http://www.html-form-guide.com/jquery/drop-down-list-jquery.html >

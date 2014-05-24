@@ -3,6 +3,7 @@
 	
 	include_once("header.php");
 	
+	// Store the previous page post data in Session
 	if(isset($_POST["studyMode"]))
 		$_SESSION['studyMode'] = @$_POST["studyMode"];
 	
@@ -33,6 +34,7 @@
 		$_SESSION['commencing_year'] = date('Y', strtotime('+1 year'));
 	else
 		$_SESSION['commencing_year'] = date('Y');
+	
 ?>
 
 <div class="wrapper">
@@ -41,7 +43,8 @@
 			<p><strong>Search for a unit</strong></p>
 			Enter a unit code
 			<form method="post" id="frmSearch" name="frmSearch" action="">
-				<input type="text" id="searchCourse" name="searchCourse" />
+				<!-- Load the searched value -->
+				<input type="text" id="searchCourse" name="searchCourse" value="<?php echo @$_POST['searchCourse']; ?>" />
 				<input type="submit" id="btnSearch" name="btnSearch" value="Search" />
 			</form>
 		</div>
@@ -49,15 +52,128 @@
 	
 	<div class="page-main">
 		<div class="course-info">
+			<!-- Display information from previous post data stored in Session -->
 			COURSE CODE : <?php echo @$_SESSION['course_selection']; ?><br/>
 			COURSE NAME : <?php echo @$_SESSION['course_name']; ?><br/>
 			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
 			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?>
 		</div>
 	</div>
+
+	<div class="left-sidebar">
+		<br/>
+		<div class="left">
+			<table>
+				<?php 
+					// Search and List the units as per search text
+					$sql = $con->query("SELECT * from units where Unit_Code like '%" . @$_POST['searchCourse'] . "%'"); 
+					if ($sql->num_rows > 0) { 
+						while($row = $sql->fetch_assoc()) {
+							echo '<tr><td><div class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td></tr>';
+						}
+					}
+					else
+						echo '<tr><td><div>Searched unit is not found.</div></td></tr>';
+				?>
+			</table>
+		</div>
+	</div>
 	
+	<div class="page-main">
+		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
+		<div class="right">
+			<table>
+				<tr>
+					<td class="blank"></td>
+					<td class="title">Monday</td>
+					<td class="title">Tuesday</td>
+					<td class="title">Wednesday</td>
+					<td class="title">Thursday</td>
+					<td class="title">Friday</td>
+				</tr>
+				<tr>
+					<td class="time">10:00</td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+				</tr>
+				<tr>
+					<td class="time">11:00</td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+				</tr>
+				<tr>
+					<td class="time">12:00</td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+				</tr>
+				<tr>
+					<td class="time">13:00</td>
+					<td class="lunch" colspan="5">Lunch</td>
+				</tr>
+				<tr>
+					<td class="time">14:00</td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
 	
 </div>
+
+<script>
+	$(function(){
+		$('.left .item').draggable({
+			revert:true,
+			proxy:'clone'
+		});
+		$('.right td.drop').droppable({
+			onDragEnter:function(){
+				$(this).addClass('over');
+			},
+			onDragLeave:function(){
+				$(this).removeClass('over');
+			},
+			onDrop:function(e,source){
+				$(this).removeClass('over');
+				if ($(source).hasClass('assigned')){
+					$(this).append(source);
+				} else {
+					var c = $(source).clone().addClass('assigned');
+					$(this).empty().append(c);
+					c.draggable({
+						revert:true
+					});
+				}
+			}
+		});
+		$('.left').droppable({
+			accept:'.assigned',
+			onDragEnter:function(e,source){
+				$(source).addClass('trash');
+			},
+			onDragLeave:function(e,source){
+				$(source).removeClass('trash');
+			},
+			onDrop:function(e,source){
+				$(source).remove();
+			}
+		});
+	});
+</script>
+
 <?php
 	include_once("footer.php");
 ?>

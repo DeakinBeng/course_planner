@@ -1,6 +1,7 @@
 body {
 	font-size: 14px;
 	font-family: Helvetica;
+	font-style: normal;
 	background: url(../images/diagonal-noise.png) repeat;
 }
 
@@ -74,7 +75,7 @@ form {
 }
 
 table {
-    /*border: 1px solid #ccc;*/
+    border: 1px solid #aaa;
 }
 table td {
     padding: 5px 15px;
@@ -97,8 +98,62 @@ div.wrapper.title {
 div.left-sidebar {
 	float: left;
 	width: 25%;
+	margin-right: 20px;
 	clear: both;
 }
 input#searchCourse {
 	width: 55%;
+}
+div.course-info {
+	font-size: 16px;
+	line-height: 24px;
+	padding: 10px 0;
+}
+
+div.search-unit {
+	background: #e5e5e5;
+	padding: 5px 10px;
+	border-radius: 5px;
+	border: 2px solid #ddd;
+}
+.left-sidebar table {
+	width: 100%;
+	border-spacing: 1px;
+}
+
+.right td.drop{
+	background:#eee;
+	width: 105px;
+	padding: 0px;
+	height: 60px;
+}
+.right td.over{
+	background:#FBEC88;
+}
+.item{
+	text-align:center;
+	/*border:1px solid #ccc;*/
+	background:#fafafa;
+	color:#444;
+	width:100px;
+	padding: 8px 5px;
+}
+.assigned{
+	border:1px solid #499B33;
+}
+.trash{
+	background-color:red;
+}
+
+.left-sidebar table td {
+	padding: 0px;
+}
+
+div.left table {
+border: none;
+}
+div.left-sidebar .left {
+height: 340px;
+overflow: auto;
+border: 1px solid #aaa;
 }
