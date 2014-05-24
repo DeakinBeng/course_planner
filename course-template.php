@@ -36,7 +36,7 @@
 
 <body>
 <div class="wrapper">
-	<form method="post" id="frmSearch" name="frmSearch" action="course-template.php">
+	<form action="post" id="frmSearch" name="frmSearch" action="">
     	<h1>Campus Or online Selection</h1>
 		<select id="studyMode">
         	<?php 
@@ -66,7 +66,7 @@
         	<option value="---">---</option>          
         </select>
 		<br/>
-        <button type="submit" id="btnSubmit" name="btnSubmit" />Generate Plan</button>
+        <button type="submit" id="btnSubmit" name="btnSubmit">Generate Plan</button>
     </form>
 </div>
 </body>
