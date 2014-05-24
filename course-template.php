@@ -84,44 +84,46 @@
 		<div class="right">
 			<table>
 				<tr>
-					<td class="blank"></td>
-					<td class="title">Monday</td>
-					<td class="title">Tuesday</td>
-					<td class="title">Wednesday</td>
-					<td class="title">Thursday</td>
-					<td class="title">Friday</td>
-				</tr>
-				<tr>
-					<td class="time">10:00</td>
-					<td class="drop"></td>
+					<td rowspan="2">Y1</td>
+					<td>T1</td>
 					<td class="drop"></td>
 					<td class="drop"></td>
 					<td class="drop"></td>
 					<td class="drop"></td>
 				</tr>
 				<tr>
-					<td class="time">11:00</td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-				</tr>
-				<tr>
-					<td class="time">12:00</td>
-					<td class="drop"></td>
+					<td>T2</td>
 					<td class="drop"></td>
 					<td class="drop"></td>
 					<td class="drop"></td>
 					<td class="drop"></td>
 				</tr>
 				<tr>
-					<td class="time">13:00</td>
-					<td class="lunch" colspan="5">Lunch</td>
+					<td rowspan="2">Y2</td>
+					<td>T1</td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
 				</tr>
 				<tr>
-					<td class="time">14:00</td>
+					<td>T2</td>
 					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+				</tr>
+				<tr>
+					<td rowspan="2">Y3</td>
+					<td>T1</td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					<td class="drop"></td>
+					
+				</tr>
+				<tr>
+					<td>T2</td>
 					<td class="drop"></td>
 					<td class="drop"></td>
 					<td class="drop"></td>

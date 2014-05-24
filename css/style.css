@@ -29,7 +29,7 @@ input, select {
 }
 input[type=submit], button[type=submit] {
     border: none;
-    padding: 7px 14px;
+    padding: 6px 14px;
     font-weight: bold;
     color: #000;
     background: #b0bb66;
@@ -76,6 +76,7 @@ form {
 
 table {
     border: 1px solid #aaa;
+	border-spacing: 0px;
 }
 table td {
     padding: 5px 15px;
@@ -123,9 +124,9 @@ div.search-unit {
 
 .right td.drop{
 	background:#eee;
-	width: 105px;
+	width: 145px;
 	padding: 0px;
-	height: 60px;
+	height: 64px;
 }
 .right td.over{
 	background:#FBEC88;
@@ -135,11 +136,12 @@ div.search-unit {
 	/*border:1px solid #ccc;*/
 	background:#fafafa;
 	color:#444;
-	width:100px;
+	width:135px;
 	padding: 8px 5px;
 }
 .assigned{
-	border:1px solid #499B33;
+	/*border:1px solid #499B33;*/
+	min-height: 48px;
 }
 .trash{
 	background-color:red;
@@ -156,4 +158,9 @@ div.left-sidebar .left {
 height: 340px;
 overflow: auto;
 border: 1px solid #aaa;
+}
+
+.right table td {
+	text-align: center;
+	border: 1px solid #aaa;
 }
