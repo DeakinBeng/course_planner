@@ -6,6 +6,33 @@
 <head>
 <meta charset="utf-8">
 <title>Course Planner</title>
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(function() {
+
+      $('#courseSelection').change(function(){
+		//alert("load-course-major.php?course_code=" + $('#courseSelection').val());
+		load_course_major('load-course-major.php?course_code=' + $('#courseSelection').val());
+    });
+
+});
+/*function to load a list*/
+function load_course_major(url)
+{
+    $("#majorSelection").empty();
+    $.getJSON(url,null,function(data)
+    {
+        $.each(data, function(i,obj)
+        {
+            $("#majorSelection").append($('<option></option>').val(obj['Major_ID']).html(obj['Major_Title']));
+        });
+    });
+}
+</script>
+
 </head>
 <body>
 	<form action="post" id="frmSearch" name="frmSearch">
@@ -35,9 +62,8 @@
         </select>
         
         <h1>Major Selection</h1>
-        <select id="majorSelection">
-        	<option value="ComputerScience">Computer Science and Software Development</option>
-        	<option value="Multimedia">Multimedia</option>            
+        <select id="majorSelection" width="100">
+        	<option value="---">---</option>          
         </select>
         <br/><br/>
         <button type="submit" id="btnSubmit" name="btnSubmit">Generate Plan</button>

@@ -3,7 +3,8 @@ $con= new mysqli("deakincourseplanner.com","Deakin","Deakin12!","CPlanner");
 if (mysqli_connect_errno()) 
 { 
 	echo "Failed to connect to MySQL: " . mysqli_connect_error(); 
-} else { 
+}
+/*else { 
 	$sql = $con->query("SELECT `Unit_Title`, `Credit_Points`,`EFTSL_Value` FROM `units` WHERE `Unit_Code` = \"SIT192\";"); 
 	if ($sql->num_rows > 0) { 
 		$row = $sql->fetch_assoc(); 
@@ -12,5 +13,6 @@ if (mysqli_connect_errno())
 		echo "<br />EFTSL value: " . $row['EFTSL_Value']; 
 	} 
 } 
+*/
 
 ?>
