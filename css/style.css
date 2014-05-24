@@ -1,6 +1,6 @@
 body {
 	font-size: 14px;
-	//font-family: Helvetica;
+	font-family: Helvetica;
 	background: url(../images/diagonal-noise.png) repeat;
 }
 
@@ -71,7 +71,6 @@ label {
 }
 form {
     clear: both;
-    margin-top: 30px;
 }
 
 table {
@@ -84,4 +83,22 @@ table td {
 }
 td.table-title {
     font-weight: bold;
+}
+div.wrapper.title {
+	background: #058095;
+	color: #fff;
+	font-size: 17px;
+}
+.title h1 {
+	font-size: 32px;
+	margin: 10px 0;
+}
+
+div.left-sidebar {
+	float: left;
+	width: 25%;
+	clear: both;
+}
+input#searchCourse {
+	width: 55%;
 }
