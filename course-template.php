@@ -77,7 +77,7 @@
 						$search_results = $sql->num_rows;
 						while($row = $sql->fetch_assoc()) {
 							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
-								<td><!--<a href="#" class="view-detail">View Detail</a>--></td></tr>';
+								<td><a href="javascript:newWindow('.$row["Unit_Code"].');" class="view-detail">View Detail</a></td></tr>';
 						}
 					}
 					else
@@ -96,7 +96,8 @@
 			COURSE NAME : <?php echo @$_SESSION['course_name']; ?><br/>
 			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
 			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?><br/>
-			CAMPUS : <?php echo @$_SESSION['campus_name']; ?>
+			CAMPUS : <?php echo @$_SESSION['campus_name']; ?><br/>
+			VALID : <span id='valid'>TRUE</span>
 		</div>
 	
 		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
@@ -211,6 +212,11 @@
 </div>
 
 <script>
+	function newWindow(unit) {
+		window.open("cinfoviewer.php/?code="+unit.innerHTML, "", "menubar=0, resizable=0,dependent=0,status=0,width=660,height=700,left=10,top=10"); 
+
+		return false;
+	} 
 	$(function(){
 		$('.left .item').draggable({
 			revert:true,
@@ -236,7 +242,7 @@
 					arr[row] = [];
 					$(this).children().each(function() {
 						if (((oddrow && col > 1 && col <= 5) || (!oddrow && col > 0 && col <= 4)) && $(this).text().length > 0) {
-							arr[row][oddrow ? col - 2 : col - 1] = $(this).text();
+							arr[row][oddrow ? col - 2 : col - 1] = $(this).text().substring(0, 6);
 							count++;
 						}
 						if (curObj.is($(this))) {
@@ -248,18 +254,22 @@
 					row++;
 					oddrow = !oddrow;
 				});
-				/* $.ajax({
+				 $.ajax({
 					   type: "POST",
 					   url: "validation/validate.php",
 					   data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
 					   success: function( msg ){
-						 alert(msg);
+						if (msg == "valid") {
+							$("#valid").text("TRUE");
+						} else {
+							$("#valid").text("FALSE");
+						}
 					   },
 					   error: function()
 					   {
 						 alert("Something went wrong!");
 					   }
-				});*/
+				});
 				$(this).removeClass('over');
 				if ($(source).hasClass('assigned')){
 					if($(this).has('.item.assigned').length == 0) {

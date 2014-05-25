@@ -5,7 +5,7 @@ class Util {
 		$ret = array();
 		$count = 0;
 		for ($i = 0; $i < $row ; $i++) {
-			for ($j = 0; $j < count($table[0]); $j++) {
+			for ($j = 0; $j < count($table[$i]); $j++) {
 				$ret[] = $table[$i][$j];
 			}
 		}
@@ -33,17 +33,16 @@ class Util {
 		if (mysqli_connect_errno()) {
 			die ("Failed to connect to MySQL: " . mysqli_connect_error());
 		} else {
-			foreach ($table as $row) {
-				foreach ($row as $unit) {
-					$sql = $con->query("SELECT `Credit_Points` FROM `units` WHERE `Unit_Code` = \"".$unit."\";");
-					if ($sql->num_rows > 0) {
-						while ($row = $sql->fetch_assoc())
-							$cpoints += $row['Credit_Points'];
-					}
+			foreach ($table as $unit) {
+				$sql = $con->query("SELECT `Credit_Points` FROM `units` WHERE `Unit_Code` = \"".$unit."\";");
+				if ($sql->num_rows > 0) {
+					$row = $sql->fetch_assoc();
+					$cpoints += $row['Credit_Points'];
 				}
 			}
 		}
 		$con->close();
+		return $cpoints;
 	}
 }
 ?>

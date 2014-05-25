@@ -143,6 +143,7 @@ div.search-unit {
 	background:#fafafa;
 	color:#444;
 	width:135px;
+	height: 51px;
 	padding: 8px 5px;
 }
 .assigned{
@@ -163,7 +164,7 @@ div.left table {
 border: none;
 }
 div.left-sidebar .left {
-height: 475px;
+height: 500px;
 overflow: auto;
 border: 1px solid #aaa;
 }
@@ -179,7 +180,7 @@ span#course-status {
 
 div.button-right {
 	text-align: right;
-	margin: 20px 0 10px 0;
+	margin: 20px 10px 10px 0;
 }
 
 img.bin {

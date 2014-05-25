@@ -2,7 +2,7 @@
 include_once 'Unit.php';
 
 class MIS211 extends Unit {
-	private $prerequisites = array("MIS101","MSC120","SIT101");
+	private $prerequisites = array();
 	private $corequisites = array();
 	private $incompatibilities = array();
 
@@ -23,12 +23,8 @@ class MIS211 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		if (count($this->prerequisites) > 0) {
-			foreach ($this->prerequisites as $pre) {
-				if (!Util::in_array_r($pre, $table)) {
-					return false;
-				}
-			}
+		if (!Util::in_array_r("MIS101", $table) && !Util::in_array_r("MSC120", $table)&& !Util::in_array_r("SIT101", $table)) {
+			return false;
 		}
 		return true;
 	}
