@@ -108,7 +108,7 @@
 					echo '<p class="note">Note: Need to Complete SIT010 Safety Induction Program (0 credit-point compulsory unit)</p>';
 				}
 			?>
-			<table>
+			<table id="template">
 			<?php
 			$added_units = "''";
 			for($i=1; $i<=3; $i++)
@@ -224,18 +224,29 @@
 				$(this).removeClass('over');
 			},
 			onDrop:function(e,source){
+				//item_dropped();
 				$(this).removeClass('over');
 				if ($(source).hasClass('assigned')){
-					$(this).append(source);
+					if($(this).has('.item.assigned').length == 0) {
+						$(this).append(source);
+					}
 				} else {
-					var c = $(source).clone().addClass('assigned');
-					$(this).empty().append(c);
-					c.draggable({
-						revert:true
-					});
+					if($("#template").find("div#" + $(source).attr("id")).length == 0) {
+						var c = $(source).clone().addClass('assigned');
+						$(this).empty().append(c);
+						c.draggable({
+							revert:true
+						});
+					}
+					else
+						alert('Unit already exists in the template.');
 				}
 			}
+				
 		});
+		function item_dropped() {
+			alert('test');
+		}
 		$('.bin').droppable({
 			accept:'.assigned',
 			onDragEnter:function(e,source){
