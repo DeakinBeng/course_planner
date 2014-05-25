@@ -64,14 +64,16 @@
 			<table>
 				<?php 
 					// Search and List the units as per search text
-					$sql = $con->query("SELECT * from units where Unit_Code like '%" . @$_POST['searchCourse'] . "%'"); 
+					$query = "SELECT A.Unit_Code, A.Unit_Title from units A WHERE A.Unit_Code like '%" . @$_POST['searchCourse'] . "%'";
+					$sql = $con->query($query); 
 					if ($sql->num_rows > 0) { 
 						while($row = $sql->fetch_assoc()) {
-							echo '<tr><td><div class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td></tr>';
+							echo '<tr><td><div class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
+								<td><!--<a href="#" class="view-detail">View Detail</a>--></td></tr>';
 						}
 					}
 					else
-						echo '<tr><td><div>Searched unit is not found.</div></td></tr>';
+						echo '<tr><td><div>Searched unit is not found or already in Core units.</div></td></tr>';
 				?>
 			</table>
 		</div>
@@ -90,53 +92,92 @@
 	
 		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
 		<div class="right">
+			<?php 
+				$sql = $con->query("SELECT * FROM major_units where Unit_Code = 'SIT010' and Major_ID = '" . $_SESSION['major_selection'] . "'"); 
+				if ($sql->num_rows > 0) { 
+					$row = $sql->fetch_assoc();
+					echo '<p class="note">Note: Need to Complete SIT010 Safety Induction Program (0 credit-point compulsory unit)</p>';
+				}
+			?>
 			<table>
+			<?php
+			for($i=1; $i<=3; $i++)
+			{
+			?>
 				<tr>
-					<td rowspan="2">Y1</td>
-					<td>T1</td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
+					<td rowspan="2" class="Y<?php echo $i; ?>">Y<?php echo $i; ?></td>
+					<td class="T1">T1</td>
+					<?php 
+					$sql = $con->query("SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
+						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
+						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
+						Where C.Trimester1 = 1 AND A.Core = 1 
+						AND A.Major_ID = '" . $_SESSION['major_selection'] . "' AND C.Campus_ID = '". $_SESSION['studyMode'] . "' Order by A.Unit_Code, A.Core desc");
+					if ($sql->num_rows > 0) { 
+						$max_count = 1;
+						while($row = $sql->fetch_assoc()) {
+							// Fetch Level/Year from the Unit Code
+							$unit_year = substr($row["Unit_Code"], 3, 1);
+							if($unit_year == $i)
+							{
+								// Maximum 4 column/units per Trimester
+								if($max_count <= 4)
+								{
+									// Check if Core Unit and not allowing Drag and Drop
+									if($row["Core"] == '1')
+										echo '<td class="core"><div>'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+									//else
+										//echo '<td class="drop"><div class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+								}
+								$max_count++;
+							}
+						}
+						while($max_count <= 4)
+						{
+							echo '<td class="drop"></td>';
+							$max_count++;
+						}
+					}
+					?>
 				</tr>
 				<tr>
-					<td>T2</td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
+					<td class="T1">T2</td>
+					<?php 
+					$sql = $con->query("SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
+						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
+						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
+						Where C.Trimester2 = 1 AND A.Core = 1 
+						AND A.Major_ID = '" . $_SESSION['major_selection'] . "' AND C.Campus_ID = '". $_SESSION['studyMode'] . "' Order by A.Unit_Code, A.Core desc");
+					if ($sql->num_rows > 0) { 
+						$max_count = 1;
+						while($row = $sql->fetch_assoc()) {
+							// Fetch Level/Year from the Unit Code
+							$unit_year = substr($row["Unit_Code"], 3, 1);
+							if($unit_year == $i)
+							{
+								// Maximum 4 column/units per Trimester
+								if($max_count <= 4)
+								{
+									// Check if Core Unit and not allowing Drag and Drop
+									if($row["Core"] == '1')
+										echo '<td class="core"><div>'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+									//else
+										//echo '<td class="drop"><div class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+								}
+								$max_count++;
+							}
+						}
+						while($max_count <= 4)
+						{
+							echo '<td class="drop"></td>';
+							$max_count++;
+						}
+					}
+					?>
 				</tr>
-				<tr>
-					<td rowspan="2">Y2</td>
-					<td>T1</td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-				</tr>
-				<tr>
-					<td>T2</td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-				</tr>
-				<tr>
-					<td rowspan="2">Y3</td>
-					<td>T1</td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					
-				</tr>
-				<tr>
-					<td>T2</td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-					<td class="drop"></td>
-				</tr>
+			<?php
+			}
+			?>
 			</table>
 		</div>
 		<img class="bin" src="images/trash5.png" />

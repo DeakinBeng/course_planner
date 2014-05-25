@@ -113,7 +113,7 @@ div.course-info {
 
 div.search-unit {
 	background: #e5e5e5;
-	padding: 5px 10px;
+	padding: 15px 10px;
 	border-radius: 5px;
 	border: 2px solid #ddd;
 }
@@ -126,7 +126,13 @@ div.search-unit {
 	background:#eee;
 	width: 145px;
 	padding: 0px;
-	height: 64px;
+	height: 68px;
+}
+.right td.core {
+	width: 145px;
+	padding: 0px;
+	height: 68px;
+	background: #D1F1F5;
 }
 .right td.over{
 	background:#FBEC88;
@@ -150,13 +156,14 @@ div.search-unit {
 
 .left-sidebar table td {
 	padding: 0px;
+	text-align: center;
 }
 
 div.left table {
 border: none;
 }
 div.left-sidebar .left {
-height: 418px;
+height: 475px;
 overflow: auto;
 border: 1px solid #aaa;
 }
@@ -179,4 +186,16 @@ img.bin {
 	float: left;
 	width: 95px;
 	margin-top: 18px;
+}
+
+td.Y1, td.Y2, td.Y3, td.T1, td.T2 {
+font-weight: bold;
+}
+
+a.view-detail {
+	display: block;
+	padding: 10px 5px;
+	color: #000;
+	font-weight: bold;
+	text-decoration: none;
 }
