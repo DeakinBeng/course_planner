@@ -225,6 +225,41 @@
 			},
 			onDrop:function(e,source){
 				//item_dropped();
+				var arr= [];
+				var row = 0;
+				var col = 0;
+				var oddrow = true;
+				var count = 0;
+				var curObj = $(this);
+				var dropLocX;
+				$(".right table tr").each(function() {
+					arr[row] = [];
+					$(this).children().each(function() {
+						if (((oddrow && col > 1 && col <= 5) || (!oddrow && col > 0 && col <= 4)) && $(this).text().length > 0) {
+							arr[row][oddrow ? col - 2 : col - 1] = $(this).text();
+							count++;
+						}
+						if (curObj.is($(this))) {
+							dropLocX = row;
+						}
+						col++;
+					});
+					col = 0;
+					row++;
+					oddrow = !oddrow;
+				});
+				/* $.ajax({
+					   type: "POST",
+					   url: "validation/validate.php",
+					   data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
+					   success: function( msg ){
+						 alert(msg);
+					   },
+					   error: function()
+					   {
+						 alert("Something went wrong!");
+					   }
+				});*/
 				$(this).removeClass('over');
 				if ($(source).hasClass('assigned')){
 					if($(this).has('.item.assigned').length == 0) {
