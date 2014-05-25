@@ -1,5 +1,12 @@
+
+
 references:
 
-Creating a school Timetable, retrieved 23 May 2014, < http://www.jeasyui.com/tutorial/dd/dnd3.php >
+Creating a school Timetable, retrieved 23 May 2014 < http://www.jeasyui.com/tutorial/dd/dnd3.php >
 Placeholder for dynamic dropdown menu, retrieved 23 May 2014 < http://stackoverflow.com/questions/22414283/placeholder-for-dynamic-dropdown-menu >
 Loading a Drop Down List Using jQuery, retrieved 23 May 2014 < http://www.html-form-guide.com/jquery/drop-down-list-jquery.html >
+
+Trash Icon, retrieved 24 May 2014< https://www.iconfinder.com/icons/34314/full_recycle_bin_trash_icon >
+http://www.veryicon.com/icons/application/bluemint-apps/full-trash-2.html 
+http://dryicons.com/icon/colorful-stickers-icons-set/trash/
+http://www.softicons.com/system-icons/free-macos-icons-by-ramotion/trash-icon

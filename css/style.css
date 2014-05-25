@@ -103,7 +103,7 @@ div.left-sidebar {
 	clear: both;
 }
 input#searchCourse {
-	width: 55%;
+	width: 52%;
 }
 div.course-info {
 	font-size: 16px;
@@ -145,6 +145,7 @@ div.search-unit {
 }
 .trash{
 	background-color:red;
+	opacity: 0.9;
 }
 
 .left-sidebar table td {
@@ -172,4 +173,10 @@ span#course-status {
 div.button-right {
 	text-align: right;
 	margin: 20px 0 10px 0;
+}
+
+img.bin {
+	float: left;
+	width: 95px;
+	margin-top: 18px;
 }

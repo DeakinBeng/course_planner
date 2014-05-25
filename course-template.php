@@ -3,9 +3,16 @@
 	
 	include_once("header.php");
 	
-	// Store the previous page post data in Session
+	// Store the previous page post data in Session (Fetch Campus Information)
 	if(isset($_POST["studyMode"]))
+	{
 		$_SESSION['studyMode'] = @$_POST["studyMode"];
+		$sql = $con->query("SELECT * from campus where Campus_ID = '" . $_SESSION['studyMode'] . "'"); 
+		if ($sql->num_rows > 0) { 
+			$row = $sql->fetch_assoc();
+			$_SESSION['campus_name'] = $row['Name'];
+		} 
+	}
 	
 	// Fetch Course Information
 	if(isset($_POST["courseSelection"]))
@@ -34,6 +41,9 @@
 		$_SESSION['commencing_year'] = date('Y', strtotime('+1 year'));
 	else
 		$_SESSION['commencing_year'] = date('Y');
+		
+	if(@$_SESSION['major_sequence'] == '')
+		header("Location: index.php");
 	
 ?>
 
@@ -74,7 +84,8 @@
 			COURSE CODE : <?php echo @$_SESSION['course_selection']; ?><br/>
 			COURSE NAME : <?php echo @$_SESSION['course_name']; ?><br/>
 			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
-			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?>
+			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?><br/>
+			CAMPUS : <?php echo @$_SESSION['campus_name']; ?>
 		</div>
 	
 		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
@@ -128,6 +139,9 @@
 				</tr>
 			</table>
 		</div>
+		<img class="bin" src="images/trash5.png" />
+		<br/>
+		<p>Click and drag a unit in trash to remove from Planner.</p>
 		<div class="button-right">
 			<input type="button" id="btnSave" name="btnSave" value="SAVE" />
 			<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />
@@ -162,7 +176,7 @@
 				}
 			}
 		});
-		$('.left').droppable({
+		$('.bin').droppable({
 			accept:'.assigned',
 			onDragEnter:function(e,source){
 				$(source).addClass('trash');
