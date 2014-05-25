@@ -62,21 +62,19 @@
 		<br/>
 		<div class="left">
 			<table>
-				<?php 
+				<?php
+					$search_results = 0;
 					// Search and List the units as per search text
 					/*$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
 					WHERE  (B.Core=0 AND B.Major_ID = '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
 					OR (B.Core=0 AND B.Major_ID <> '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
-					Group by A.Unit_Code, A.Unit_Title";
+					Group by A.Unit_Code, A.Unit_Title";*/
 					$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
-					WHERE  A.Unit_Code like '%" . @$_POST['searchCourse'] . "%' Group by A.Unit_Code, A.Unit_Title";*/
-					$query = "SELECT A.*, C.Unit_Title FROM availabilities A
-						LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code
-						LEFT OUTER JOIN units C on A.Unit_Code = C.Unit_Code
-						Where Campus_ID=". @$_SESSION['studyMode'] ." AND 
-						Major_ID = '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%'";
+					WHERE A.Unit_Code like '%" . @$_POST['searchCourse'] . "%' AND
+					A.Unit_Code NOT IN (". @$_SESSION['added_units'] .") Group by A.Unit_Code, A.Unit_Title";
 					$sql = $con->query($query); 
 					if ($sql->num_rows > 0) { 
+						$search_results = $sql->num_rows;
 						while($row = $sql->fetch_assoc()) {
 							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
 								<td><!--<a href="#" class="view-detail">View Detail</a>--></td></tr>';
@@ -87,6 +85,7 @@
 				?>
 			</table>
 		</div>
+		<p><?php echo $search_results . " Search Results"; ?></p>
 		<p>Course Status: <span id="course-status">Incomplete</span></p>
 	</div>
 	
