@@ -1,4 +1,5 @@
 <?php
+
 class Util {
 	public static function getAllRowsBefore($table, $row) {
 		$ret = array();
@@ -8,11 +9,12 @@ class Util {
 				$ret[] = $table[$i][$j];
 			}
 		}
+		return $ret;
 	}
 	
-	function in_array_r($needle, $haystack, $strict = false) {
+	public static function in_array_r($needle, $haystack, $strict = false) {
 		foreach ($haystack as $item) {
-			if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+			if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && Util::in_array_r($needle, $item, $strict))) {
 				return true;
 			}
 		}
@@ -27,11 +29,21 @@ class Util {
 
 	public static function getCreditPoints($table) {
 		$cpoints = 0;
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				$cpoints += $unit->getCreditPoints();
+		$con= new mysqli("localhost","Deakin","Deakin12!","CPlanner");
+		if (mysqli_connect_errno()) {
+			die ("Failed to connect to MySQL: " . mysqli_connect_error());
+		} else {
+			foreach ($table as $row) {
+				foreach ($row as $unit) {
+					$sql = $con->query("SELECT `Credit_Points` FROM `units` WHERE `Unit_Code` = \"".$unit."\";");
+					if ($sql->num_rows > 0) {
+						while ($row = $sql->fetch_assoc())
+							$cpoints += $row['Credit_Points'];
+					}
+				}
 			}
 		}
+		$con->close();
 	}
 }
 ?>

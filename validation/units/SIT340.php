@@ -6,8 +6,8 @@ class SIT340 extends Unit {
 	private $corequisites = array();
 	private $incompatibilities = array("SIT740");
 
-	function __construct($unitTitle, $unitCode, $creditPoints, $EFTSL) {
-		parent::__construct($unitTitle, $unitCode, $creditPoints, $EFTSL);
+	function __construct($unitCode) {
+		parent::__construct($unitCode);
    }
    
    	public function getPrerequisites() {
@@ -65,7 +65,7 @@ class SIT340 extends Unit {
 		return true;
 	}
 	
-	public function validateRequirements($table, $row, $creditPoints) {
+	public function validateRequirements($table, $row) {
 		$newTable = Util::getAllRowsBefore($table, $row);
 		if ($this->validatePrerequisites($newTable)) {
 			Util::addCurrentRow($table, $newTable, $row);
