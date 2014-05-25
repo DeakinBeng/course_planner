@@ -197,6 +197,7 @@
 			}
 			?>
 			</table>
+			<?php $_SESSION['added_units'] = $added_units; ?>
 		</div>
 		<img class="bin" src="images/trash5.png" />
 		<br/>
