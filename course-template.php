@@ -106,6 +106,7 @@
 			?>
 			<table>
 			<?php
+			$added_units = "''";
 			for($i=1; $i<=3; $i++)
 			{
 			?>
@@ -113,11 +114,12 @@
 					<td rowspan="2" class="Y<?php echo $i; ?>">Y<?php echo $i; ?></td>
 					<td class="T1">T1</td>
 					<?php 
-					$sql = $con->query("SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
+					$query = "SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
 						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
 						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
-						Where C.Trimester1 = 1 AND A.Core = 1 
-						AND A.Major_ID = '" . $_SESSION['major_selection'] . "' AND C.Campus_ID = '". $_SESSION['studyMode'] . "' Order by A.Unit_Code, A.Core desc");
+						Where C.Trimester1 = 1 AND A.Core = 1 AND A.Unit_Code NOT IN (". $added_units .")
+						AND A.Major_ID = '" . $_SESSION['major_selection'] . "' AND C.Campus_ID = '". $_SESSION['studyMode'] . "' Order by A.Unit_Code, A.Core desc";
+					$sql = $con->query($query);
 					if ($sql->num_rows > 0) { 
 						$max_count = 1;
 						while($row = $sql->fetch_assoc()) {
@@ -129,10 +131,13 @@
 								if($max_count <= 4)
 								{
 									// Check if Core Unit and not allowing Drag and Drop
-									if($row["Core"] == '1')
+									if($row["Core"] == '1') {
 										echo '<td class="core"><div id="'. $row["Unit_Code"] . '">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
-									//else
-										//echo '<td class="drop"><div id="'. $row["Unit_Code"] . '" class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+										if($added_units == '')
+											$added_units .= "'".$row["Unit_Code"]."'";
+										else
+											$added_units .= ', ' . "'".$row["Unit_Code"]."'";
+									}
 								}
 								$max_count++;
 							}
@@ -148,11 +153,12 @@
 				<tr>
 					<td class="T1">T2</td>
 					<?php 
-					$sql = $con->query("SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
+					$query = "SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
 						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
 						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
-						Where C.Trimester2 = 1 AND A.Core = 1 
-						AND A.Major_ID = '" . $_SESSION['major_selection'] . "' AND C.Campus_ID = '". $_SESSION['studyMode'] . "' Order by A.Unit_Code, A.Core desc");
+						Where C.Trimester2 = 1 AND A.Core = 1 AND A.Unit_Code NOT IN (". $added_units .")
+						AND A.Major_ID = '" . $_SESSION['major_selection'] . "' AND C.Campus_ID = '". $_SESSION['studyMode'] . "' Order by A.Unit_Code, A.Core desc";
+					$sql = $con->query($query);
 					if ($sql->num_rows > 0) { 
 						$max_count = 1;
 						while($row = $sql->fetch_assoc()) {
@@ -164,10 +170,13 @@
 								if($max_count <= 4)
 								{
 									// Check if Core Unit and not allowing Drag and Drop
-									if($row["Core"] == '1')
+									if($row["Core"] == '1') {
 										echo '<td class="core"><div id="'. $row["Unit_Code"] . '">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
-									//else
-										//echo '<td class="drop"><div id="'. $row["Unit_Code"] . '" class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+										if($added_units == '')
+											$added_units .= "'".$row["Unit_Code"]."'";
+										else
+											$added_units .= ', ' . "'".$row["Unit_Code"]."'";
+									}
 								}
 								$max_count++;
 							}
