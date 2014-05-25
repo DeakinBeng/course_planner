@@ -64,12 +64,17 @@
 			<table>
 				<?php 
 					// Search and List the units as per search text
-					$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
+					/*$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
 					WHERE  (B.Core=0 AND B.Major_ID = '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
 					OR (B.Core=0 AND B.Major_ID <> '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
 					Group by A.Unit_Code, A.Unit_Title";
-					/*$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
+					$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
 					WHERE  A.Unit_Code like '%" . @$_POST['searchCourse'] . "%' Group by A.Unit_Code, A.Unit_Title";*/
+					$query = "SELECT A.*, C.Unit_Title FROM availabilities A
+						LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code
+						LEFT OUTER JOIN units C on A.Unit_Code = C.Unit_Code
+						Where Campus_ID=". @$_SESSION['studyMode'] ." AND 
+						Major_ID = '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%'";
 					$sql = $con->query($query); 
 					if ($sql->num_rows > 0) { 
 						while($row = $sql->fetch_assoc()) {
