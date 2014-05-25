@@ -64,11 +64,16 @@
 			<table>
 				<?php 
 					// Search and List the units as per search text
-					$query = "SELECT A.Unit_Code, A.Unit_Title from units A WHERE A.Unit_Code like '%" . @$_POST['searchCourse'] . "%'";
+					$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
+					WHERE  (B.Core=0 AND B.Major_ID = '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
+					OR (B.Core=0 AND B.Major_ID <> '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
+					Group by A.Unit_Code, A.Unit_Title";
+					/*$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
+					WHERE  A.Unit_Code like '%" . @$_POST['searchCourse'] . "%' Group by A.Unit_Code, A.Unit_Title";*/
 					$sql = $con->query($query); 
 					if ($sql->num_rows > 0) { 
 						while($row = $sql->fetch_assoc()) {
-							echo '<tr><td><div class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
+							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
 								<td><!--<a href="#" class="view-detail">View Detail</a>--></td></tr>';
 						}
 					}
@@ -125,9 +130,9 @@
 								{
 									// Check if Core Unit and not allowing Drag and Drop
 									if($row["Core"] == '1')
-										echo '<td class="core"><div>'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+										echo '<td class="core"><div id="'. $row["Unit_Code"] . '">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
 									//else
-										//echo '<td class="drop"><div class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+										//echo '<td class="drop"><div id="'. $row["Unit_Code"] . '" class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
 								}
 								$max_count++;
 							}
@@ -160,9 +165,9 @@
 								{
 									// Check if Core Unit and not allowing Drag and Drop
 									if($row["Core"] == '1')
-										echo '<td class="core"><div>'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+										echo '<td class="core"><div id="'. $row["Unit_Code"] . '">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
 									//else
-										//echo '<td class="drop"><div class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
+										//echo '<td class="drop"><div id="'. $row["Unit_Code"] . '" class="item assigned">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
 								}
 								$max_count++;
 							}
