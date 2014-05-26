@@ -77,7 +77,7 @@
 						$search_results = $sql->num_rows;
 						while($row = $sql->fetch_assoc()) {
 							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
-								<td><a title="'. $row["Unit_Code"] . '" href="#" onClick="javascript:newWindow('.$row["Unit_Code"].');" class="view-detail">View Detail</a></td></tr>';
+								<td><a href="#" onClick="javascript:newWindow('.$row["Unit_Code"].');" class="view-detail">View Detail</a></td></tr>';
 						}
 					}
 					else
@@ -221,7 +221,6 @@
 <script>
 	// Display the unit detail information in a new window
 	function newWindow(unit) {
-		//alert($(unit).attr("id"));
 		//window.open("cinfoviewer.php/?code="+unit.innerHTML, "", "menubar=0, resizable=0,dependent=0,status=0,width=660,height=700,left=10,top=10"); 
 		window.open("cinfoviewer.php/?code="+$(unit).attr("id"), "", "menubar=0, resizable=0,dependent=0,status=0,width=660,height=700,left=10,top=10"); 
 
