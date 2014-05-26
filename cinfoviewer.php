@@ -292,7 +292,7 @@ include_once 'simple_html_dom.php';
 
 if(isset($_GET["code"])){
 	$url = "http://www.deakin.edu.au/future-students/courses/unit.php?unit=".strtoupper($_GET["code"]);
-		
+
 	$html = file_get_html($url);
 	$usefullinks = $html->find('#usefulLinks');
 	if ($usefullinks != null)
