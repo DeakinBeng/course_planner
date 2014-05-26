@@ -26,7 +26,6 @@ class SIT282 extends Unit {
 		$count = 0;
 		foreach ($table as $unit) {
 			if (strpos($unit, "SIT") !== false) {
-				echo "hello";
 				if (substr($unit, 3, 1) == "1") {
 					$count++;
 				}
