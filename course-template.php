@@ -103,6 +103,7 @@
 		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
 		<div class="right">
 			<?php 
+				// Check if selected major has Satey Induction Program unit and display Note
 				$sql = $con->query("SELECT * FROM major_units where Unit_Code = 'SIT010' and Major_ID = '" . $_SESSION['major_selection'] . "'"); 
 				if ($sql->num_rows > 0) { 
 					$row = $sql->fetch_assoc();
@@ -112,6 +113,7 @@
 			<table id="template">
 			<?php
 			$added_units = "''";
+			// 3 Years Loop for Trimester 1 and Trimester 2
 			for($i=1; $i<=3; $i++)
 			{
 			?>
@@ -119,6 +121,7 @@
 					<td rowspan="2" class="Y<?php echo $i; ?>">Y<?php echo $i; ?></td>
 					<td class="T1">T1</td>
 					<?php 
+					// Get Unit information for Trimester 1
 					$query = "SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
 						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
 						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
@@ -149,6 +152,7 @@
 						}
 						while($max_count <= 4)
 						{
+							// Add Empty Column for electives
 							echo '<td class="drop"></td>';
 							$max_count++;
 						}
@@ -158,6 +162,7 @@
 				<tr>
 					<td class="T1">T2</td>
 					<?php 
+					// Get Unit Information for Trimester 2
 					$query = "SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
 						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
 						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
@@ -188,6 +193,7 @@
 						}
 						while($max_count <= 4)
 						{
+							// Add Empty Column for electives
 							echo '<td class="drop"></td>';
 							$max_count++;
 						}
@@ -198,6 +204,7 @@
 			}
 			?>
 			</table>
+			// Store core units that are already added in the template
 			<?php $_SESSION['added_units'] = $added_units; ?>
 		</div>
 		<img class="bin" src="images/trash5.png" />
