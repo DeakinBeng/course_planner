@@ -77,7 +77,7 @@
 						$search_results = $sql->num_rows;
 						while($row = $sql->fetch_assoc()) {
 							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
-								<td><a href="javascript:newWindow('.$row["Unit_Code"].');" class="view-detail">View Detail</a></td></tr>';
+								<td><a href="#" onClick="javascript:newWindow('.$row["Unit_Code"].');" class="view-detail">View Detail</a></td></tr>';
 						}
 					}
 					else
