@@ -204,7 +204,7 @@
 			}
 			?>
 			</table>
-			// Store core units that are already added in the template
+			<!-- Store core units that are already added in the template -->
 			<?php $_SESSION['added_units'] = $added_units; ?>
 		</div>
 		<img class="bin" src="images/trash5.png" />
