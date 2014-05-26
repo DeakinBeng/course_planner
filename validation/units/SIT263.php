@@ -27,17 +27,15 @@ class SIT263 extends Unit {
 			return true;
 		
 		$count = 0;
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (strpos($unit, "SIT") !== false) {
-					if (substr($unit, 4, 1) !== "9") {
-						$count++;
-					}
+		foreach ($table as $unit) {
+			if (strpos($unit, "SIT") !== false) {
+				if (substr($unit, 4, 1) !== "9") {
+					$count++;
 				}
-				
-				if ($count >= 4)
-					break;
 			}
+			
+			if ($count >= 4)
+				break;
 		}
 		
 		if ($count < 4)

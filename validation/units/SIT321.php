@@ -26,17 +26,15 @@ class SIT321 extends Unit {
 		$count = 0;
 		if (Util::in_array_r("MSC228", $table))
 			$count++;
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (strpos($unit, "SIT") !== false && substr($unit, 3, 1) == "2") {
-					if (substr($unit, 4, 1) !== "9") {
-						$count++;
-					}
+		foreach ($table as $unit) {
+			if (strpos($unit, "SIT") !== false && substr($unit, 3, 1) == "2") {
+				if (substr($unit, 4, 1) !== "9") {
+					$count++;
 				}
-				
-				if ($count >= 2)
-					break;
 			}
+			
+			if ($count >= 2)
+				break;
 		}
 		
 		if ($count < 2)

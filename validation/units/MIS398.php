@@ -24,14 +24,12 @@ class MIS398 extends Unit {
 	
 	protected function validatePrerequisites($table) {
 		$count = 0;
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (substr($unit, 3, 1) == "2") {
-					$count++;
-				}
-				if ($count == 4)
-					return true;
+		foreach ($table as $unit) {
+			if (substr($unit, 3, 1) == "2") {
+				$count++;
 			}
+			if ($count == 4)
+				return true;
 		}
 		return false;
 	}

@@ -35,17 +35,15 @@ class SIT340 extends Unit {
 	
 	protected function validateCorequisites($table) {
 		$count = 0;
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (strpos($unit, "SIT") !== false) {
-					if (substr($unit, 3, 1) == "2") {
-						$count++;
-					}
+		foreach ($table as $unit) {
+			if (strpos($unit, "SIT") !== false) {
+				if (substr($unit, 3, 1) == "2") {
+					$count++;
 				}
-				
-				if ($count >= 2)
-					break;
 			}
+			
+			if ($count >= 2)
+				break;
 		}
 		
 		if ($count < 2)

@@ -24,17 +24,15 @@ class SIT302 extends Unit {
 	
 	protected function validatePrerequisites($table) {
 		$count = 0;
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (strpos($unit, "SIT") !== false) {
-					if (substr($unit, 3, 1) == "2" || substr($unit, 3, 1) == "3") {
-						$count++;
-					}
+		foreach ($table as $unit) {
+			if (strpos($unit, "SIT") !== false) {
+				if (substr($unit, 3, 1) == "2" || substr($unit, 3, 1) == "3") {
+					$count++;
 				}
-				
-				if ($count >= 5)
-					break;
 			}
+			
+			if ($count >= 5)
+				break;
 		}
 		
 		if ($count < 5)

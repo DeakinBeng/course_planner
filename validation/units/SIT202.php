@@ -24,8 +24,7 @@ class SIT202 extends Unit {
 	
 	protected function validatePrerequisites($table) {
 		$count = 0;
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
+		foreach ($table as $unit) {
 			if (strpos($unit, "SIT") !== false) {
 				if (substr($unit, 4, 1) !== "9") {
 					$count++;
@@ -34,7 +33,6 @@ class SIT202 extends Unit {
 			
 			if ($count >= 2)
 				break;
-			}
 		}
 		
 		if ($count < 2)

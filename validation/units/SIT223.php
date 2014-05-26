@@ -25,15 +25,13 @@ class SIT223 extends Unit {
 	protected function validatePrerequisites($table) {
 		$count = 0;
 		
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (strpos($unit, "SIT") !== false) {
-					$count++;
-				}
-				
-				if ($count >= 2)
-					break;
+		foreach ($table as $unit) {
+			if (strpos($unit, "SIT") !== false) {
+				$count++;
 			}
+			
+			if ($count >= 2)
+				break;
 		}
 		
 		if ($count < 2)

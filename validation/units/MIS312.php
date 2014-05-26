@@ -26,11 +26,9 @@ class MIS312 extends Unit {
 		if (!Util::in_array_r("MIS101", $table) && !Util::in_array_r("SIT101", $table)) {
 			return false;
 		}
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (substr($unit, 3, 1) == "2")
-					return true;
-			}
+		foreach ($table as $unit) {
+			if (substr($unit, 3, 1) == "2")
+				return true;
 		}
 		return false;
 	}
