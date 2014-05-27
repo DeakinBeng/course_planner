@@ -149,6 +149,7 @@ div.search-unit {
 .assigned{
 	/*border:1px solid #499B33;*/
 	min-height: 48px;
+	height: auto;
 }
 .trash{
 	background-color:red;

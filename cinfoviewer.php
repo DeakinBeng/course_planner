@@ -264,7 +264,7 @@ body {
 	margin: 0px;
 	padding: 0px;
 	font-family: Verdana, Arial, sans-serif;
-	font-size:62.5%;
+	font-size:75%;
 }
 
 table.course_summary td, table.course_summary th

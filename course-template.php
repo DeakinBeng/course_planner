@@ -44,7 +44,7 @@
 		
 	if(@$_SESSION['major_sequence'] == '')
 		header("Location: index.php");
-	
+		
 ?>
 
 <div class="wrapper">
@@ -112,6 +112,7 @@
 			?>
 			<table id="template">
 			<?php
+			
 			$added_units = "''";
 			// 3 Years Loop for Trimester 1 and Trimester 2
 			for($i=1; $i<=3; $i++)
@@ -263,21 +264,26 @@
 					row++;
 					oddrow = !oddrow;
 				});
-				 $.ajax({
-					   type: "POST",
-					   url: "validation/validate.php",
-					   data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
-					   success: function( msg ){
+				var drop_valid = 0;
+				$.ajax({
+					type: "POST",
+					url: "validation/validate.php",
+					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
+					success: function( msg ){
 						if (msg == "valid") {
 							$("#valid").text("TRUE");
 						} else {
 							$("#valid").text("FALSE");
+							alert('Unit cannot be drop in template due to course rules / pre-requisites / co-requisites.');
+							$(this).removeClass('over');
+							$("#template div#" + $(source).attr("id")).remove();
 						}
-					   },
-					   error: function()
-					   {
-						 alert("Something went wrong!");
-					   }
+						//alert(arr);
+					},
+					error: function()
+					{
+					 alert("Something went wrong!");
+					}
 				});
 				$(this).removeClass('over');
 				if ($(source).hasClass('assigned')){
@@ -285,15 +291,16 @@
 						$(this).append(source);
 					}
 				} else {
-					if($("#template").find("div#" + $(source).attr("id")).length == 0) {
-						var c = $(source).clone().addClass('assigned');
-						$(this).empty().append(c);
-						c.draggable({
-							revert:true
-						});
+					if($("#template").find("div#" + $(source).attr("id")).length == 0) {						
+							var c = $(source).clone().addClass('assigned');
+							$(this).empty().append(c);
+							c.draggable({
+								revert:true
+							});
 					}
-					else
-						alert('Unit already exists in the template.');
+					else {
+							alert('Unit already exists in the template.');
+					}
 				}
 			}
 				
