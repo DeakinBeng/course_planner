@@ -295,7 +295,7 @@
 					},
 					error: function()
 					{
-					 alert("Something went wrong!");
+					 jAlert("Something went wrong!");
 					}
 				});
 				$(this).removeClass('over');
@@ -314,7 +314,7 @@
 							});
 					}
 					else {
-							alert('Unit already exists in the template.');
+							jAlert('Unit already exists in the template.');
 					}
 				}
 			}
