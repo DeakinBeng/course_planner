@@ -222,25 +222,27 @@
 <script>
 	// Display the unit detail information in a new window
 	function newWindow(unit) {
-		//window.open("cinfoviewer.php/?code="+unit.innerHTML, "", "menubar=0, resizable=0,dependent=0,status=0,width=660,height=700,left=10,top=10"); 
 		window.open("cinfoviewer.php/?code="+$(unit).attr("id"), "", "menubar=0, resizable=0,dependent=0,status=0,width=660,height=700,left=10,top=10"); 
 
 		return false;
 	} 
 	$(function(){
+		// Set the left Unit List draggable
 		$('.left .item').draggable({
 			revert:true,
 			proxy:'clone'
 		});
+		// Set the Right Template table columns droppable
 		$('.right td.drop').droppable({
 			onDragEnter:function(){
+				// Add hover effect style on table when trying to drop unit
 				$(this).addClass('over');
 			},
 			onDragLeave:function(){
+				// Remove hover effect style on table when trying to drop unit
 				$(this).removeClass('over');
 			},
 			onDrop:function(e,source){
-				//item_dropped();
 				var arr= [];
 				var row = 0;
 				var col = 0;
@@ -248,10 +250,13 @@
 				var count = 0;
 				var curObj = $(this);
 				var dropLocX;
+				
+				// Check each row and column of table to Fetch the units added in template
 				$(".right table tr").each(function() {
 					arr[row] = [];
 					$(this).children().each(function() {
 						if (((oddrow && col > 1 && col <= 5) || (!oddrow && col > 0 && col <= 4)) && $(this).text().length > 0) {
+							// Collect the added units in an array
 							arr[row][oddrow ? col - 2 : col - 1] = $(this).text().substring(0, 6);
 							count++;
 						}
@@ -264,7 +269,7 @@
 					row++;
 					oddrow = !oddrow;
 				});
-				var drop_valid = 0;
+				// Use ajax to pass the unit array to another PHP file for validation check
 				$.ajax({
 					type: "POST",
 					url: "validation/validate.php",
@@ -286,11 +291,13 @@
 					}
 				});
 				$(this).removeClass('over');
+				// existing units move function in template table from one column to another
 				if ($(source).hasClass('assigned')){
 					if($(this).has('.item.assigned').length == 0) {
 						$(this).append(source);
 					}
 				} else {
+					// Check for duplicate units and Add New unit dropped from unit list to template table
 					if($("#template").find("div#" + $(source).attr("id")).length == 0) {						
 							var c = $(source).clone().addClass('assigned');
 							$(this).empty().append(c);
@@ -308,15 +315,20 @@
 		function item_dropped() {
 			alert('test');
 		}
+		// Set trash icon droppable for removing units
 		$('.bin').droppable({
+			// Drop Accept only of units with class name "assigned"
 			accept:'.assigned',
 			onDragEnter:function(e,source){
+				// Add Hover effect style on unit when moved to trash icon
 				$(source).addClass('trash');
 			},
 			onDragLeave:function(e,source){
+				// Remove Hover effect style on unit when moved to trash icon
 				$(source).removeClass('trash');
 			},
 			onDrop:function(e,source){
+				// If dropped on trash, remove the unit from source i.e. template table
 				$(source).remove();
 			}
 		});
