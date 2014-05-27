@@ -97,7 +97,7 @@
 			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
 			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?><br/>
 			CAMPUS : <?php echo @$_SESSION['campus_name']; ?><br/>
-			VALID : <span id='valid'>TRUE</span>
+			<!--VALID : <span id='valid'>TRUE</span>-->
 		</div>
 	
 		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
@@ -271,9 +271,9 @@
 					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
 					success: function( msg ){
 						if (msg == "valid") {
-							$("#valid").text("TRUE");
+							//$("#valid").text("TRUE");
 						} else {
-							$("#valid").text("FALSE");
+							//$("#valid").text("FALSE");
 							alert('Unit cannot be drop in template due to course rules / pre-requisites / co-requisites.');
 							$(this).removeClass('over');
 							$("#template div#" + $(source).attr("id")).remove();
