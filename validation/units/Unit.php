@@ -1,4 +1,6 @@
 <?php
+
+
 Abstract class Unit {
 
 	private $unitCode;
@@ -23,6 +25,22 @@ Abstract class Unit {
 	
 	abstract public function getIncompatibilities();
 	
-	abstract public function validateRequirements($table, $row);
+	public function validateRequirements($table, $row) {
+		$ret = "";
+		$newTable = Util::getAllRowsBefore($table, $row);
+		if (!$this->validatePrerequisites($newTable)) {
+			$ret = $ret . ($this->getPrerequisites());
+		}
+		$ret = $ret . "|";
+		Util::addCurrentRow($table, $newTable, $row);
+		if (!$this->validateCorequisites($table)) {
+			$ret = $ret . ($this->getCorequisites());
+		}
+		$ret = $ret . "|";
+		if (!$this->validateIncompatibilities($table)) {
+			$ret = $ret . ($this->getIncompatibilities());
+		}
+		return $ret;
+	}
 }
 ?>

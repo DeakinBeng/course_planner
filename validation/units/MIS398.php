@@ -55,18 +55,6 @@ class MIS398 extends Unit {
 		}
 		return true;
 	}
-	
-	public function validateRequirements($table, $row) {
-		$newTable = Util::getAllRowsBefore($table, $row);
-		if ($this->validatePrerequisites($newTable)) {
-			Util::addCurrentRow($table, $newTable, $row);
-			if ($this->validateCorequisites($table) && 
-				$this->validateIncompatibilities($table)) {
-				return true;
-			}
-		}
-		return false;
-	}
 }
 
 ?>

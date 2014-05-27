@@ -8,10 +8,11 @@ if (isset($_POST['table']) && isset($_POST['unit_code']) && isset($_POST['row'])
 	$unitcode = $_POST['unit_code'];
 	if (file_exists('units/'.$unitcode.'.php')) {
 		$unit = new $unitcode($unitcode);
-		if ($unit->validateRequirements($table, $_POST['row'])) {
+		$validation = $unit->validateRequirements($table, $_POST['row']);
+		if (strlen($validation) == 2) {
 			echo "valid";
 		} else {
-			echo "invalid";
+			echo $validation;
 		}
 	} else { // no file for validation. default to valid
 		echo "valid";

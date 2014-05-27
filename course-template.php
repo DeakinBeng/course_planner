@@ -275,15 +275,23 @@
 					url: "validation/validate.php",
 					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
 					success: function( msg ){
-						if (msg == "valid") {
-							//$("#valid").text("TRUE");
-						} else {
-							//$("#valid").text("FALSE");
-							alert('Unit cannot be drop in template due to course rules / pre-requisites / co-requisites.');
+						if (msg != "valid") {
+							var msgArr = msg.split("|");
+							var errStr = "<span style='color: red;'>";
+							if (msgArr[0].length > 0) {
+								errStr += ("\r\nPrerequisites: " + msgArr[0]);
+							}
+							if (msgArr[1].length > 0) {
+								errStr += ("\r\nCorequisites: " + msgArr[1]);
+							}
+							if (msgArr[2].length > 0) {
+								errStr += ("\r\nIncompatibilities: " + msgArr[2]);
+							}
+							errStr += "</span>";
+							jAlert('Unit cannot be drop in template due to:' + errStr);
 							$(this).removeClass('over');
 							$("#template div#" + $(source).attr("id")).remove();
 						}
-						//alert(arr);
 					},
 					error: function()
 					{

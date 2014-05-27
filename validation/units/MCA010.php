@@ -1,6 +1,5 @@
 <?php
 include_once 'Unit.php';
-include_once 'Util.php';
 
 class MCA010 extends Unit {
 	private $prerequisites = array();
@@ -54,18 +53,6 @@ class MCA010 extends Unit {
 			}
 		}
 		return true;
-	}
-	
-	public function validateRequirements($table, $row) {
-		$newTable = Util::getAllRowsBefore($table, $row);
-		if ($this->validatePrerequisites($newTable)) {
-			Util::addCurrentRow($table, $newTable, $row);
-			if ($this->validateCorequisites($table) && 
-				$this->validateIncompatibilities($table)) {
-				return true;
-			}
-		}
-		return false;
 	}
 }
 
