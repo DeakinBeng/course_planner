@@ -76,7 +76,7 @@
 					if ($sql->num_rows > 0) { 
 						$search_results = $sql->num_rows;
 						while($row = $sql->fetch_assoc()) {
-							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item">'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
+							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item"><span class="hidden"><img class="cross" onClick="return removeFromTable(this);" src="images/cross.png"></span>'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
 								<td><a href="#" onClick="javascript:newWindow('.$row["Unit_Code"].');" class="view-detail">View Detail</a></td></tr>';
 						}
 					}
@@ -226,7 +226,25 @@
 
 		return false;
 	} 
+	
+	function removeFromTable(item) {
+			var source = $(item).parent().parent();
+			var c = source.clone(true);
+			c.removeClass('trash');
+			c.removeClass('assigned');
+			c.draggable({
+				revert:true
+			});
+			c.children("span").addClass('hidden'); // hide the x
+			$('.left table tbody').prepend("<tr><td></td><td></td></tr>"); // create empty table row for insertion
+			var firsttd = $('.left table tbody tr td').first();
+			firsttd.append(c); // add unit back into list
+			firsttd.next().append('<a href="#" onClick="return newWindow('+c.prop('id')+');" class="view-detail">View Detail</a>');
+			source.remove();
+	}
+	
 	$(function(){
+		
 		// Set the left Unit List draggable
 		$('.left .item').draggable({
 			revert:true,
@@ -306,12 +324,14 @@
 					}
 				} else {
 					// Check for duplicate units and Add New unit dropped from unit list to template table
-					if($("#template").find("div#" + $(source).attr("id")).length == 0) {						
+					if($("#template").find("div#" + $(source).attr("id")).length == 0) {
 							var c = $(source).clone().addClass('assigned');
+							c.children("span").removeClass('hidden');
 							$(this).empty().append(c);
 							c.draggable({
 								revert:true
 							});
+							$(source).parent().parent().remove(); // remove unit from list
 					}
 					else {
 							jAlert('Unit already exists in the template.');
@@ -323,6 +343,8 @@
 		function item_dropped() {
 			alert('test');
 		}
+		
+		
 		// Set trash icon droppable for removing units
 		$('.bin').droppable({
 			// Drop Accept only of units with class name "assigned"
@@ -336,7 +358,18 @@
 				$(source).removeClass('trash');
 			},
 			onDrop:function(e,source){
-				// If dropped on trash, remove the unit from source i.e. template table
+				// If dropped on trash, remove the unit from source and add back into list i.e. template table
+				c = $(source).clone(true);
+				c.removeClass('trash');
+				c.removeClass('assigned');
+				c.children("span").addClass('hidden');
+				c.draggable({
+					revert:true
+				});
+				$('.left table tbody').prepend("<tr><td></td><td></td></tr>"); // create empty table row for insertion
+				var firsttd = $('.left table tbody tr td').first();
+				firsttd.append(c); // add unit back into list
+				firsttd.next().append('<a href="#" onClick="return newWindow('+c.prop('id')+');" class="view-detail">View Detail</a>');
 				$(source).remove();
 			}
 		});

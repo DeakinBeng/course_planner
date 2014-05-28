@@ -26,20 +26,18 @@ class SIT207 extends Unit {
 		$firstpre = false;
 		$secondpre = false;
 		
-		foreach ($table as $row) {
-			foreach ($row as $unit) {
-				if (strpos($unit, "SIT") !== false) {
-					if (strpos($unit, "SIT102") !== false) {
-						$firstpre = true;
-					} else if (strpos($unit, "SIT153") !== false) {
-						$firstpre = true;
-					} else {
-						$secondpre = true;
-					}
+		foreach ($table as $unit) {
+			if (strpos($unit, "SIT") !== false) {
+				if (strpos($unit, "SIT102") !== false) {
+					$firstpre = true;
+				} else if (strpos($unit, "SIT153") !== false) {
+					$firstpre = true;
+				} else {
+					$secondpre = true;
 				}
-				if ($firstpre && $secondpre)
-					return true;
 			}
+			if ($firstpre && $secondpre)
+				return true;
 		}
 		return false;
 	}

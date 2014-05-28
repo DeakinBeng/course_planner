@@ -9,7 +9,6 @@
 		$(function() {
 			// Load default Course and Major on Page Load
 			load_course('load-campus-course.php?campus_id=' + $('#studyMode').val());
-			load_course_major('load-course-major.php?course_code=' + $('#courseSelection').val());
 			
 			// Load related course and major on Change of drop down menu selection
 			$('#studyMode').change(function(){
@@ -32,6 +31,7 @@
 				{
 					$("#courseSelection").append($('<option></option>').val(obj['Course_Code']).html(obj['Course_Title']));
 				});
+				load_course_major('load-course-major.php?course_code=' + $('#courseSelection').val()); // load majors once course has been loaded
 			});
 		}
 		// Load a course major

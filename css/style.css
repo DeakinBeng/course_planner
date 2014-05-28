@@ -201,3 +201,16 @@ a.view-detail {
 	font-weight: bold;
 	text-decoration: none;
 }
+
+.hidden {
+	visibility: hidden;
+}
+
+img.cross {
+	cursor:pointer; 
+	float: right;  
+	margin-right: -4px; 
+	margin-top: -6px;
+	height:10px;
+	width:10px;
+}
