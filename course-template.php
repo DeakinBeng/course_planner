@@ -299,6 +299,7 @@
 					url: "validation/validate.php",
 					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
 					success: function( msg ){
+						if ($(source).parent().html() != null) {
 						if (msg != "valid") { // Does not meet prereq/coreq and incompatibility tests
 							var msgArr = msg.split("|");
 							var errStr = "<span style='color: red;'>";
@@ -318,7 +319,7 @@
 						} else {
 							// existing units move function in template table from one column to another
 							if ($(source).hasClass('assigned')) {
-								if(currentCell.has('.item.assigned').length == 0 && $(source).parent().html() != null) {
+								if(currentCell.has('.item.assigned').length == 0) {
 									currentCell.append(source);
 								}
 							} else {
@@ -336,6 +337,7 @@
 										jAlert('Unit already exists in the template.');
 								}
 							}
+						}
 						}
 					},
 					error: function()
