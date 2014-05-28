@@ -107,7 +107,13 @@
 				$sql = $con->query("SELECT * FROM major_units where Unit_Code = 'SIT010' and Major_ID = '" . $_SESSION['major_selection'] . "'"); 
 				if ($sql->num_rows > 0) { 
 					$row = $sql->fetch_assoc();
-					echo '<p class="note">Note: Need to Complete SIT010 Safety Induction Program (0 credit-point compulsory unit)</p>';
+					?>
+					<p class="note">Note: Need to Complete SIT010 Safety Induction Program (0 credit-point compulsory unit)</p>
+					<script>
+					$(".left").css('height', '478px'); // align left table with right table
+					</script>
+					
+				<?php	
 				}
 			?>
 			<table id="template">
@@ -208,9 +214,9 @@
 			<!-- Store core units that are already added in the template -->
 			<?php $_SESSION['added_units'] = $added_units; ?>
 		</div>
-		<img class="bin" src="images/trash5.png" />
+		<!-- <img class="bin" src="images/trash5.png" /> 
 		<br/>
-		<p>Click and drag a unit in trash to remove from Planner.</p>
+		<p>Click and drag a unit in trash to remove from Planner.</p> -->
 		<div class="button-right">
 			<input type="button" id="btnSave" name="btnSave" value="SAVE" />
 			<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />
@@ -344,7 +350,7 @@
 			alert('test');
 		}
 		
-		
+		/*
 		// Set trash icon droppable for removing units
 		$('.bin').droppable({
 			// Drop Accept only of units with class name "assigned"
@@ -373,6 +379,7 @@
 				$(source).remove();
 			}
 		});
+		*/
 	});
 </script>
 

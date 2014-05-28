@@ -23,6 +23,6 @@
 
 <body>
 <div class="wrapper title">
-	<h1>STUDENT COURSE PLANNER</h1>
+	<h1><a href="index.php">STUDENT COURSE PLANNER</a></h1>
 	<p>Plan out your future course with the Deakin Course Planner.</p>
 </div>

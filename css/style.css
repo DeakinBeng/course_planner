@@ -11,6 +11,7 @@ body {
     background: #f5f5f5;
     padding: 20px;
 }
+
 h1 {
 	//color: #fff;
     border-radius: 3px;
@@ -86,12 +87,16 @@ table td {
 td.table-title {
     font-weight: bold;
 }
+
 div.wrapper.title {
 	background: #058095;
 	color: #fff;
 	font-size: 17px;
 }
-.title h1 {
+
+.title h1 a {
+	text-decoration: none !important;
+	color: #fff;
 	font-size: 32px;
 	margin: 10px 0;
 }
@@ -166,7 +171,7 @@ div.left table {
 border: none;
 }
 div.left-sidebar .left {
-height: 500px;
+height: 447px;
 overflow: auto;
 border: 1px solid #aaa;
 }
