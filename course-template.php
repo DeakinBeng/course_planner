@@ -71,7 +71,7 @@
 					Group by A.Unit_Code, A.Unit_Title";*/
 					$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
 					WHERE A.Unit_Code like '%" . @$_POST['searchCourse'] . "%' AND
-					A.Unit_Code NOT IN (". @$_SESSION['added_units'] .") Group by A.Unit_Code, A.Unit_Title";
+					A.Unit_Code NOT IN (". @$_SESSION['added_units'] .") Group by SUBSTRING(A.Unit_Code, 4, 3), A.Unit_Title";
 					$sql = $con->query($query); 
 					if ($sql->num_rows > 0) { 
 						$search_results = $sql->num_rows;
