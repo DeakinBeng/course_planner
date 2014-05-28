@@ -236,7 +236,6 @@
 	function removeFromTable(item) {
 			var source = $(item).parent().parent();
 			var c = source.clone(true);
-			c.removeClass('trash');
 			c.removeClass('assigned');
 			c.draggable({
 				revert:true
@@ -294,12 +293,13 @@
 					oddrow = !oddrow;
 				});
 				// Use ajax to pass the unit array to another PHP file for validation check
+				var currentCell = $(this);
 				$.ajax({
 					type: "POST",
 					url: "validation/validate.php",
 					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
 					success: function( msg ){
-						if (msg != "valid") {
+						if (msg != "valid") { // Does not meet prereq/coreq and incompatibility tests
 							var msgArr = msg.split("|");
 							var errStr = "<span style='color: red;'>";
 							if (msgArr[0].length > 0) {
@@ -313,8 +313,29 @@
 							}
 							errStr += "</span>";
 							jAlert('Unit cannot be drop in template due to:' + errStr);
-							$(this).removeClass('over');
-							$("#template div#" + $(source).attr("id")).remove();
+							currentCell.removeClass('over');
+							//removeFromTable($("#template div#" + $(source).attr("id")), false);
+						} else {
+							// existing units move function in template table from one column to another
+							if ($(source).hasClass('assigned')) {
+								if(currentCell.has('.item.assigned').length == 0 && $(source).parent().html() != null) {
+									currentCell.append(source);
+								}
+							} else {
+								// Check for duplicate units and Add New unit dropped from unit list to template table
+								if($("#template").find("div#" + $(source).attr("id")).length == 0) {
+										var c = $(source).clone().addClass('assigned');
+										c.children("span").removeClass('hidden');
+										currentCell.empty().append(c);
+										c.draggable({
+											revert:true
+										});
+										$(source).parent().parent().remove(); // remove unit from list
+								}
+								else {
+										jAlert('Unit already exists in the template.');
+								}
+							}
 						}
 					},
 					error: function()
@@ -323,28 +344,7 @@
 					}
 				});
 				$(this).removeClass('over');
-				// existing units move function in template table from one column to another
-				if ($(source).hasClass('assigned')){
-					if($(this).has('.item.assigned').length == 0) {
-						$(this).append(source);
-					}
-				} else {
-					// Check for duplicate units and Add New unit dropped from unit list to template table
-					if($("#template").find("div#" + $(source).attr("id")).length == 0) {
-							var c = $(source).clone().addClass('assigned');
-							c.children("span").removeClass('hidden');
-							$(this).empty().append(c);
-							c.draggable({
-								revert:true
-							});
-							$(source).parent().parent().remove(); // remove unit from list
-					}
-					else {
-							jAlert('Unit already exists in the template.');
-					}
-				}
 			}
-				
 		});
 		function item_dropped() {
 			alert('test');
