@@ -214,12 +214,12 @@
 			<!-- Store core units that are already added in the template -->
 			<?php $_SESSION['added_units'] = $added_units; ?>
 		</div>
-		<!-- <img class="bin" src="images/trash5.png" /> 
+		 <img class="bin" src="images/trash5.png" /> 
 		<br/>
-		<p>Click and drag a unit in trash to remove from Planner.</p> -->
+		<p>Click and drag a unit in trash to remove from Planner.</p>
 		<div class="button-right">
 			<input type="button" id="btnSave" name="btnSave" value="SAVE TO FILE" />
-			<!--<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />-->
+			<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />
 		</div>
 	</div>
 	
@@ -263,10 +263,9 @@
 				
 				var toSave = $("#template").parent().parent().clone();
 				toSave.children('p').remove(); // remove "Click and drag" text
+				toSave.children('img.bin').remove(); // remove trash
 				toSave.children('div.button-right').remove(); // remove buttons
-				toSave.find('> * > * > * > * > * > * > span').each(function() {
-					$(this).remove(); // remove crosses
-				});
+				toSave.find('> * > * > * > * > * > * > span').remove();
 				
 				$.ajax({
 					type: "POST",
@@ -394,7 +393,7 @@
 			alert('test');
 		}
 		
-		/*
+		
 		// Set trash icon droppable for removing units
 		$('.bin').droppable({
 			// Drop Accept only of units with class name "assigned"
@@ -423,7 +422,7 @@
 				$(source).remove();
 			}
 		});
-		*/
+		
 	});
 </script>
 
