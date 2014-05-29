@@ -218,8 +218,8 @@
 		<br/>
 		<p>Click and drag a unit in trash to remove from Planner.</p> -->
 		<div class="button-right">
-			<input type="button" id="btnSave" name="btnSave" value="SAVE" />
-			<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />
+			<input type="button" id="btnSave" name="btnSave" value="SAVE TO FILE" />
+			<!--<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />-->
 		</div>
 	</div>
 	
@@ -249,6 +249,47 @@
 	}
 	
 	$(function(){
+		$.toast.config.align = 'right';
+		$.toast.config.width = 400;
+		
+		$( "#btnSave" ).click(function() { // save image
+			$.toast("Your table is processing. Please wait!", {duration: 3000,
+					sticky: false,
+					type: "info"}
+			);
+			if (!$( "#btnSave" ).hasClass("clicked")) {
+				$( "#btnSave" ).addClass("clicked");
+				var t = setTimeout('$( "#btnSave" ).removeClass("clicked");', 5000); // make sure user doesnt spam server.
+				
+				var toSave = $("#template").parent().parent().clone();
+				toSave.children('p').remove(); // remove "Click and drag" text
+				toSave.children('div.button-right').remove(); // remove buttons
+				toSave.find('> * > * > * > * > * > * > span').each(function() {
+					$(this).remove(); // remove crosses
+				});
+				
+				$.ajax({
+					type: "POST",
+					url: "request-image.php",
+					data: {p2i_html : toSave.html()},
+					success: function( msg ){
+						var link = document.createElement('a');
+						link.href = msg;
+						link.download = 'Timetable.jpg';
+						document.body.appendChild(link);
+						link.click(); // download file
+						document.body.removeChild(link);
+						clearTimeout(t);
+					},
+					error: function()
+					{
+						
+					}
+				});
+				
+			}
+		});
+		
 		// Set the left Unit List draggable
 		$('.left .item').draggable({
 			revert:true,
