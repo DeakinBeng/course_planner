@@ -96,7 +96,7 @@
 			COURSE NAME : <?php echo @$_SESSION['course_name']; ?><br/>
 			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
 			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?><br/>
-			CAMPUS : <?php echo @$_SESSION['campus_name']; ?><br/>
+			CAMPUS : <span id="campus"><?php echo @$_SESSION['campus_name']; ?></span><br/>
 			<!--VALID : <span id='valid'>TRUE</span>-->
 		</div>
 	
@@ -249,7 +249,6 @@
 	}
 	
 	$(function(){
-		
 		// Set the left Unit List draggable
 		$('.left .item').draggable({
 			revert:true,
@@ -273,7 +272,6 @@
 				var count = 0;
 				var curObj = $(this);
 				var dropLocX;
-				
 				// Check each row and column of table to Fetch the units added in template
 				$(".right table tr").each(function() {
 					arr[row] = [];
@@ -297,23 +295,26 @@
 				$.ajax({
 					type: "POST",
 					url: "validation/validate.php",
-					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX},
+					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX, campus : $('span#campus').text()},
 					success: function( msg ){
 						if ($(source).parent().html() != null) {
 						if (msg != "valid") { // Does not meet prereq/coreq and incompatibility tests
 							var msgArr = msg.split("|");
 							var errStr = "<span style='color: red;'>";
 							if (msgArr[0].length > 0) {
-								errStr += ("\r\nPrerequisites: " + msgArr[0]);
+								errStr += ("<br />Prerequisites: " + msgArr[0]);
 							}
 							if (msgArr[1].length > 0) {
-								errStr += ("\r\nCorequisites: " + msgArr[1]);
+								errStr += ("<br />Corequisites: " + msgArr[1]);
 							}
 							if (msgArr[2].length > 0) {
-								errStr += ("\r\nIncompatibilities: " + msgArr[2]);
+								errStr += ("<br />Incompatibilities: " + msgArr[2]);
+							}
+							if (msgArr[3].length > 0) {
+								errStr += ("<br />" + msgArr[3]);
 							}
 							errStr += "</span>";
-							jAlert('Unit cannot be drop in template due to:' + errStr);
+							new Messi('Unit cannot be drop in template due to:' + errStr, {title: 'Error', titleClass: 'anim error', buttons: [{id: 0, label: 'Close', val: 'X'}]});
 							currentCell.removeClass('over');
 							//removeFromTable($("#template div#" + $(source).attr("id")), false);
 						} else {
@@ -334,7 +335,7 @@
 										$(source).parent().parent().remove(); // remove unit from list
 								}
 								else {
-										jAlert('Unit already exists in the template.');
+									new Messi('Unit already exists in the template.', {title: 'Error', titleClass: 'anim error', buttons: [{id: 0, label: 'Close', val: 'X'}]});
 								}
 							}
 						}
@@ -342,7 +343,7 @@
 					},
 					error: function()
 					{
-					 jAlert("Something went wrong!");
+						new Messi('Something went wrong!', {title: 'Error', titleClass: 'anim error', buttons: [{id: 0, label: 'Close', val: 'X'}]});
 					}
 				});
 				$(this).removeClass('over');
