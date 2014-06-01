@@ -23,7 +23,7 @@ class MIS291 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		$cpoints = Util::getCreditPoints($table);
+		$cpoints = Util::getAllCreditPoints($table);
 		if ($cpoints < 4) {
 			return false;
 		}

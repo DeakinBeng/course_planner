@@ -95,6 +95,7 @@
 			MAJOR SEQUENCE : <?php echo @$_SESSION['major_sequence']; ?><br/>
 			COMMENCING : <?php echo @$_SESSION['commencing_year']; ?><br/>
 			CAMPUS : <span id="campus"><?php echo @$_SESSION['campus_name']; ?></span><br/>
+			CREDIT POINTS : <span id="creditpoints"></span><br/>
 			<!--VALID : <span id='valid'>TRUE</span>-->
 		</div>
 	
@@ -118,6 +119,7 @@
 			<?php
 			
 			$added_units = "''";
+			$creditpoints = 0;
 			// 3 Years Loop for Trimester 1 and Trimester 2
 			for($i=1; $i<=3; $i++)
 			{
@@ -127,7 +129,7 @@
 					<td class="T1">T1</td>
 					<?php 
 					// Get Unit information for Trimester 1
-					$query = "SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
+					$query = "SELECT A.Unit_Code, B.Credit_Points, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
 						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
 						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
 						Where C.Trimester1 = 1 AND A.Core = 1 AND A.Unit_Code NOT IN (". $added_units .")
@@ -151,6 +153,7 @@
 										else
 											$added_units .= ', ' . "'".$row["Unit_Code"]."'";
 									}
+									$creditpoints += $row['Credit_Points'];
 								}
 								$max_count++;
 							}
@@ -168,7 +171,7 @@
 					<td class="T1">T2</td>
 					<?php 
 					// Get Unit Information for Trimester 2
-					$query = "SELECT A.Unit_Code, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
+					$query = "SELECT A.Unit_Code, B.Credit_Points, B.Unit_Title, A.Core, C.Trimester1, C.Trimester2, A.Year FROM `major_units` A 
 						LEFT OUTER JOIN units B on A.Unit_Code = B.Unit_Code
 						LEFT OUTER JOIN availabilities C on A.Unit_Code = C.Unit_Code
 						Where C.Trimester2 = 1 AND A.Core = 1 AND A.Unit_Code NOT IN (". $added_units .")
@@ -192,6 +195,7 @@
 										else
 											$added_units .= ', ' . "'".$row["Unit_Code"]."'";
 									}
+									$creditpoints += $row['Credit_Points'];
 								}
 								$max_count++;
 							}
@@ -235,6 +239,7 @@
 			var source = $(item).parent().parent();
 			var c = source.clone(true);
 			c.removeClass('assigned');
+			updateCreditPoints(-c.data("cpoints"));
 			c.draggable({
 				revert:true
 			});
@@ -246,7 +251,13 @@
 			source.remove();
 	}
 	
+	function updateCreditPoints(delta) {
+		var newval = parseInt($("#creditpoints").text()) + parseInt(delta);
+		$("#creditpoints").text(newval);
+	}
+	
 	$(function(){
+		$("#creditpoints").text("<?php echo $creditpoints;?>");
 		$.toast.config.align = 'right';
 		$.toast.config.width = 400;
 		
@@ -336,7 +347,7 @@
 					success: function( msg ){
 						if ($(source).parent().html() != null) {
 						//alert(msg);
-						if (msg != "valid") { // Does not meet prereq/coreq and incompatibility tests
+						if (msg.length != 6) { // Does not meet prereq/coreq and incompatibility tests
 							var msgArr = msg.split("|");
 							var errStr = "<span style='color: red;'>";
 							if (msgArr[0].length > 0) {
@@ -365,6 +376,9 @@
 								// Check for duplicate units and Add New unit dropped from unit list to template table
 								if($("#template").find("div#" + $(source).attr("id")).length == 0) {
 										var c = $(source).clone().addClass('assigned');
+										c.data("cpoints", msg.substring(msg.length - 1));
+										updateCreditPoints(c.data("cpoints"));
+										// update credit points somewhere
 										c.children("span").removeClass('hidden');
 										currentCell.empty().append(c);
 										c.draggable({
@@ -405,9 +419,12 @@
 				$(source).removeClass('trash');
 			},
 			onDrop:function(e,source){
-				// If dropped on trash, remove the unit from source and add back into list i.e. template table
+				$(source).removeClass('trash'); 
+				removeFromTable($(source).children().children()); // traverse down to img
+				
+				/*(// If dropped on trash, remove the unit from source and add back into list i.e. template table
 				c = $(source).clone(true);
-				c.removeClass('trash');
+				
 				c.removeClass('assigned');
 				c.children("span").addClass('hidden');
 				c.draggable({
@@ -418,6 +435,7 @@
 				firsttd.append(c); // add unit back into list
 				firsttd.next().append('<a href="#" onClick="return newWindow('+c.prop('id')+');" class="view-detail">View Detail</a>');
 				$(source).remove();
+				*/
 			}
 		});
 	});

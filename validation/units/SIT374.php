@@ -23,7 +23,7 @@ class SIT374 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		$cpoints = Util::getCreditPoints($table);
+		$cpoints = Util::getAllCreditPoints($table);
 		if ($cpoints < 15) {
 			return false;
 		}

@@ -62,6 +62,8 @@ Abstract class Unit {
 				}
 			}
 		}
+		$ret = $ret . "|";
+		$ret = $ret . Util::getCreditPoints($this->unitCode);
 		return $ret;
 	}
 }

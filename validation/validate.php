@@ -9,8 +9,8 @@ if (isset($_POST['table']) && isset($_POST['unit_code']) && isset($_POST['row'])
 	if (file_exists('units/'.$unitcode.'.php')) {
 		$unit = new $unitcode($unitcode);
 		$validation = $unit->validateRequirements($table, $_POST['row'], $_POST['campus']);
-		if (strlen($validation) == 3) {
-			echo "valid";
+		if (strlen($validation) == 5) {
+			echo "valid" . substr($validation, -1);
 		} else {
 			echo $validation;
 		}

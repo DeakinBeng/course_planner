@@ -1,6 +1,6 @@
 <?php
-
 class Util {
+
 	public static function getAllRowsBefore($table, $row) {
 		$ret = array();
 		$count = 0;
@@ -27,43 +27,39 @@ class Util {
 		}
 	}
 
-	public static function getCreditPoints($table) {
-		$cpoints = 0;
-		$con= new mysqli("deakincourseplanner.com","Deakin","Deakin12!","CPlanner");
-		if (mysqli_connect_errno()) {
-			die ("Failed to connect to MySQL: " . mysqli_connect_error());
-		} else {
-			foreach ($table as $unit) {
-				$sql = $con->query("SELECT `Credit_Points` FROM `units` WHERE `Unit_Code` = \"".$unit."\";");
-				if ($sql->num_rows > 0) {
-					$row = $sql->fetch_assoc();
-					$cpoints += $row['Credit_Points'];
-				}
-			}
+	public static function getCreditPoints($unit) {
+		include("../database.php");
+		$ret = 0;
+		$sql = $con->query("SELECT `Credit_Points` FROM `units` WHERE `Unit_Code` = \"".$unit."\";");
+		if ($sql->num_rows > 0) {
+			$row = $sql->fetch_assoc();
+			$ret = $row['Credit_Points'];
 		}
-		$con->close();
+		return $ret;
+	}
+	
+	public static function getAllCreditPoints($table) {
+		$cpoints = 0;
+		foreach ($table as $unit) {
+			$cpoints += Util::getCreditPoints($unit);
+		}
 		return $cpoints;
 	}
 	
 	public static function getTrimesterAvail($campus, $unit) {
+		include("../database.php");
 		$trimesters = array();
-		$con= new mysqli("deakincourseplanner.com","Deakin","Deakin12!","CPlanner");
-		if (mysqli_connect_errno()) {
-			die ("Failed to connect to MySQL: " . mysqli_connect_error());
-		} else {
-			$sql = $con->query("SELECT A.Campus_ID, C.Campus_ID, C.Name, A.Unit_Code, A.Trimester1, A.Trimester2, A.Trimester3  FROM 
-			`availabilities` AS A 
-			INNER JOIN 
-			`campus` AS C
-			ON C.Name = \"".$campus."\" AND C.Campus_ID = A.Campus_ID AND A.Unit_Code=\"".$unit."\"");
-			if ($sql->num_rows > 0) {
-				$row = $sql->fetch_assoc();
-				$trimesters[0] = $row['Trimester1'];
-				$trimesters[1] = $row['Trimester2'];
-				$trimesters[2] = $row['Trimester3'];
-			}
+		$sql = $con->query("SELECT A.Campus_ID, C.Campus_ID, C.Name, A.Unit_Code, A.Trimester1, A.Trimester2, A.Trimester3  FROM 
+		`availabilities` AS A 
+		INNER JOIN 
+		`campus` AS C
+		ON C.Name = \"".$campus."\" AND C.Campus_ID = A.Campus_ID AND A.Unit_Code=\"".$unit."\"");
+		if ($sql->num_rows > 0) {
+			$row = $sql->fetch_assoc();
+			$trimesters[0] = $row['Trimester1'];
+			$trimesters[1] = $row['Trimester2'];
+			$trimesters[2] = $row['Trimester3'];
 		}
-		$con->close();
 		return $trimesters;
 	}
 }

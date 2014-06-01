@@ -23,7 +23,7 @@ class MIS332 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		$cpoints = Util::getCreditPoints($table);
+		$cpoints = Util::getAllCreditPoints($table);
 		if ($cpoints < 6) {
 			return false;
 		}

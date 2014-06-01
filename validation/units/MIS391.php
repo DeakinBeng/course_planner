@@ -23,7 +23,7 @@ class MIS391 extends Unit {
 	}
 	
 	protected function validatePrerequisites($table) {
-		$cpoints = Util::getCreditPoints($table);
+		$cpoints = Util::getAllCreditPoints($table);
 		if ($cpoints < 12) {
 			return false;
 		}
