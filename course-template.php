@@ -65,13 +65,11 @@
 				<?php
 					$search_results = 0;
 					// Search and List the units as per search text
-					/*$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
-					WHERE  (B.Core=0 AND B.Major_ID = '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
-					OR (B.Core=0 AND B.Major_ID <> '". @$_SESSION['major_selection'] ."' AND A.Unit_Code like '%" . @$_POST['searchCourse'] . "%') 
-					Group by A.Unit_Code, A.Unit_Title";*/
 					$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
-					WHERE A.Unit_Code like '%" . @$_POST['searchCourse'] . "%' AND
-					A.Unit_Code NOT IN (". @$_SESSION['added_units'] .") Group by SUBSTRING(A.Unit_Code, 4, 3), A.Unit_Title";
+					WHERE A.Unit_Code like '%" . @$_POST['searchCourse'] . "%'";
+					if(isset($_SESSION['added_units']))
+						$query .= " AND A.Unit_Code NOT IN (". @$_SESSION['added_units'] .") ";
+					$query .= " Group by SUBSTRING(A.Unit_Code, 4, 3), A.Unit_Title";
 					$sql = $con->query($query); 
 					if ($sql->num_rows > 0) { 
 						$search_results = $sql->num_rows;
@@ -101,7 +99,7 @@
 		</div>
 	
 		<p><strong>Click and drag a Unit in the Course Planner Template</strong></p>
-		<div class="right">
+		<div class="right" id="table-template">
 			<?php 
 				// Check if selected major has Satey Induction Program unit and display Note
 				$sql = $con->query("SELECT * FROM major_units where Unit_Code = 'SIT010' and Major_ID = '" . $_SESSION['major_selection'] . "'"); 
@@ -219,7 +217,7 @@
 		<p>Click and drag a unit in trash to remove from Planner.</p>
 		<div class="button-right">
 			<input type="button" id="btnSave" name="btnSave" value="SAVE TO FILE" />
-			<input type="button" id="btnPrint" name="btnPrint" value="PRINT" />
+			<input type="button" id="btnPrint" name="btnPrint" value="PRINT" onClick="window.print()" />
 		</div>
 	</div>
 	
@@ -337,6 +335,7 @@
 					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX, campus : $('span#campus').text()},
 					success: function( msg ){
 						if ($(source).parent().html() != null) {
+						//alert(msg);
 						if (msg != "valid") { // Does not meet prereq/coreq and incompatibility tests
 							var msgArr = msg.split("|");
 							var errStr = "<span style='color: red;'>";
@@ -421,8 +420,8 @@
 				$(source).remove();
 			}
 		});
-		
 	});
+
 </script>
 
 <?php

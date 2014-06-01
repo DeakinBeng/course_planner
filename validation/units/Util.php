@@ -29,7 +29,7 @@ class Util {
 
 	public static function getCreditPoints($table) {
 		$cpoints = 0;
-		$con= new mysqli("localhost","Deakin","Deakin12!","CPlanner");
+		$con= new mysqli("deakincourseplanner.com","Deakin","Deakin12!","CPlanner");
 		if (mysqli_connect_errno()) {
 			die ("Failed to connect to MySQL: " . mysqli_connect_error());
 		} else {
@@ -47,7 +47,7 @@ class Util {
 	
 	public static function getTrimesterAvail($campus, $unit) {
 		$trimesters = array();
-		$con= new mysqli("localhost","Deakin","Deakin12!","CPlanner");
+		$con= new mysqli("deakincourseplanner.com","Deakin","Deakin12!","CPlanner");
 		if (mysqli_connect_errno()) {
 			die ("Failed to connect to MySQL: " . mysqli_connect_error());
 		} else {

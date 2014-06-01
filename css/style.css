@@ -176,10 +176,11 @@ overflow: auto;
 border: 1px solid #aaa;
 }
 
-.right table td {
+.right table td, #table-template table td {
 	text-align: center;
 	border: 1px solid #aaa;
 }
+
 span#course-status {
 	color: #f00;
 	font-weight: bold;
@@ -219,4 +220,10 @@ img.cross {
 	margin-top: -6px;
 	height:10px;
 	width:10px;
+}
+
+@media print {
+	.left-sidebar , .page-main p, .page-main img, .page-main .button-right, .wrapper.title{
+      display: none;
+    }
 }

@@ -10,3 +10,7 @@ Trash Icon, retrieved 24 May 2014< https://www.iconfinder.com/icons/34314/full_r
 http://www.veryicon.com/icons/application/bluemint-apps/full-trash-2.html 
 http://dryicons.com/icon/colorful-stickers-icons-set/trash/
 http://www.softicons.com/system-icons/free-macos-icons-by-ramotion/trash-icon
+
+Step by Step Tutorial: Print only a portion/part of page with javascript, retrieved 28 May 2014, < http://myphpscriptz.com/php-scripts-tutorials/step-by-step-tutorial-print-only-a-portionpart-of-page-with-javascript/ >
+
+How to download/print specific portion of a page using php, retrieved 28 May 2014, < http://stackoverflow.com/questions/5125641/how-to-download-print-specific-portion-of-a-page-using-php >
