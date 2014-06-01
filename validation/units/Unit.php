@@ -44,7 +44,8 @@ Abstract class Unit {
 		$trimesters = Util::getTrimesterAvail($campus, $this->unitCode);
 		$trimester = ($row) % 2;
 		if (count($trimesters) < 3) {
-			$ret = $ret . "No availability data found. Please notify the system Administrator";
+			//$ret = $ret . "No availability data found. Please notify the system Administrator";
+			// No availability data found. 
 		} else if ($trimesters[$trimester] == 0) {
 			$ret = $ret . "Unit is only available in trimester ";
 			$count = 0;

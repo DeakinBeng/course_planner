@@ -259,7 +259,7 @@
 			);
 			if (!$( "#btnSave" ).hasClass("clicked")) {
 				$( "#btnSave" ).addClass("clicked");
-				var t = setTimeout('$( "#btnSave" ).removeClass("clicked");', 5000); // make sure user doesnt spam server.
+				var t = setTimeout(function(){ $( "#btnSave" ).removeClass("clicked");}, 5000); // make sure user doesnt spam server.
 				
 				var toSave = $("#template").parent().parent().clone();
 				toSave.children('p').remove(); // remove "Click and drag" text
@@ -278,7 +278,6 @@
 						document.body.appendChild(link);
 						link.click(); // download file
 						document.body.removeChild(link);
-						clearTimeout(t);
 					},
 					error: function()
 					{
