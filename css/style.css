@@ -28,7 +28,7 @@ input, select {
     font-size: 14px;
     border: 1px solid #ccc;
 }
-input[type=submit], button[type=submit], input[type=button] {
+input[type=submit], button[type=submit], input[type=button], .button {
     border: none;
     padding: 6px 14px;
     font-weight: bold;
@@ -37,6 +37,7 @@ input[type=submit], button[type=submit], input[type=button] {
     border-radius: 3px;
     width: auto;
 	margin: 10px 0;
+	cursor: pointer;
 }
 input[type=submit]:hover, button[type=submit]:hover, input[type=button]:hover {
     //background: #3399cc;
@@ -95,10 +96,13 @@ div.wrapper.title {
 }
 
 .title h1 a {
-	text-decoration: none !important;
+	text-decoration: none;
 	color: #fff;
 	font-size: 32px;
 	margin: 10px 0;
+}
+.title h1 a:hover {
+	text-decoration: underline;
 }
 
 div.left-sidebar {

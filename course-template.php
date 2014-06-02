@@ -52,38 +52,17 @@
 		<div class="search-unit">
 			<p><strong>Search for a unit</strong></p>
 			Enter a unit code
-			<form method="post" id="frmSearch" name="frmSearch" action="">
 				<!-- Load the searched value -->
 				<input type="text" id="searchCourse" name="searchCourse" value="<?php echo @$_POST['searchCourse']; ?>" />
-				<input type="submit" id="btnSearch" name="btnSearch" value="Search" />
-			</form>
+				<a id="search" class="button">Search</a>
 		</div>
 		
 		<br/>
 		<div class="left">
-			<table>
-				<?php
-					$search_results = 0;
-					// Search and List the units as per search text
-					$query = "SELECT A.Unit_Code, A.Unit_Title, B.Core from units A LEFT OUTER JOIN major_units B on A.Unit_Code = B.Unit_Code 
-					WHERE A.Unit_Code like '%" . @$_POST['searchCourse'] . "%'";
-					if(isset($_SESSION['added_units']))
-						$query .= " AND A.Unit_Code NOT IN (". @$_SESSION['added_units'] .") ";
-					$query .= " Group by SUBSTRING(A.Unit_Code, 4, 3), A.Unit_Title";
-					$sql = $con->query($query); 
-					if ($sql->num_rows > 0) { 
-						$search_results = $sql->num_rows;
-						while($row = $sql->fetch_assoc()) {
-							echo '<tr><td><div id="'. $row["Unit_Code"] . '" class="item"><span class="hidden"><img class="cross" onClick="return removeFromTable(this);" src="images/cross.png"></span>'. $row['Unit_Code'] . ' - ' . $row['Unit_Title'] . '</div></td>
-								<td><a href="#" onClick="javascript:newWindow('.$row["Unit_Code"].');" class="view-detail">View Detail</a></td></tr>';
-						}
-					}
-					else
-						echo '<tr><td><div>Searched unit is not found or already in Core units.</div></td></tr>';
-				?>
-			</table>
+			<!-- Units will be loaded from search jQuery -->
+			<table id="search_result"><tr><td>Search...</td></tr></table>
 		</div>
-		<p><?php echo $search_results . " Search Results"; ?></p>
+		<p id="search_count"></p>
 		<p>Course Status: <span id="course-status" class="incomplete">Incomplete</span></p>
 	</div>
 	
@@ -117,8 +96,8 @@
 			?>
 			<table id="template">
 			<?php
-			
 			$added_units = "''";
+			$filled_units = "";
 			$creditpoints = 0;
 			// 3 Years Loop for Trimester 1 and Trimester 2
 			for($i=1; $i<=3; $i++)
@@ -148,10 +127,14 @@
 									// Check if Core Unit and not allowing Drag and Drop
 									if($row["Core"] == '1') {
 										echo '<td class="core"><div id="'. $row["Unit_Code"] . '">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
-										if($added_units == '')
+										if($added_units == '') {
 											$added_units .= "'".$row["Unit_Code"]."'";
-										else
-											$added_units .= ', ' . "'".$row["Unit_Code"]."'";
+											$filled_units .= $row["Unit_Code"];
+										}
+										else {
+											$added_units .= ',' . "'".$row["Unit_Code"]."'";
+											$filled_units .= ','.$row["Unit_Code"];
+										}
 									}
 									$creditpoints += $row['Credit_Points'];
 								}
@@ -190,10 +173,14 @@
 									// Check if Core Unit and not allowing Drag and Drop
 									if($row["Core"] == '1') {
 										echo '<td class="core"><div id="'. $row["Unit_Code"] . '">'. $row["Unit_Code"]. ' - ' . $row["Unit_Title"] . '</div></td>';
-										if($added_units == '')
+										if($added_units == '') {
 											$added_units .= "'".$row["Unit_Code"]."'";
-										else
-											$added_units .= ', ' . "'".$row["Unit_Code"]."'";
+											$filled_units .= $row["Unit_Code"];
+										}
+										else {
+											$added_units .= ',' . "'".$row["Unit_Code"]."'";
+											$filled_units .= ',' .$row["Unit_Code"];
+										}
 									}
 									$creditpoints += $row['Credit_Points'];
 								}
@@ -215,6 +202,7 @@
 			</table>
 			<!-- Store core units that are already added in the template -->
 			<?php $_SESSION['added_units'] = $added_units; ?>
+			<?php $_SESSION['filled_units'] = $filled_units; ?>
 		</div>
 		 <img class="bin" src="images/trash5.png" /> 
 		<br/>
@@ -254,7 +242,7 @@
 	function updateCreditPoints(delta) {
 		var newval = parseInt($("#creditpoints").text()) + parseInt(delta);
 		$("#creditpoints").text(newval);
-		if(newval >= 17) {
+		if(newval >= 24) {
 			$("#course-status").text("Complete");
 			$("#course-status").addClass("complete");
 		}
@@ -321,7 +309,7 @@
 				$(this).removeClass('over');
 			},
 			onDrop:function(e,source){
-				var arr= [];
+				var arr = [];
 				var row = 0;
 				var col = 0;
 				var oddrow = true;
@@ -354,7 +342,6 @@
 					data: {table : JSON.stringify(arr), unit_code : $(source).attr("id"), row : dropLocX, campus : $('span#campus').text()},
 					success: function( msg ){
 						if ($(source).parent().html() != null) {
-						//alert(msg);
 						if (msg.length != 6) { // Does not meet prereq/coreq and incompatibility tests
 							var msgArr = msg.split("|");
 							var errStr = "<span style='color: red;'>";
@@ -407,12 +394,8 @@
 					}
 				});
 				$(this).removeClass('over');
-			}
+			},
 		});
-		function item_dropped() {
-			alert('test');
-		}
-		
 		
 		// Set trash icon droppable for removing units
 		$('.bin').droppable({
@@ -446,8 +429,41 @@
 				*/
 			}
 		});
+			
+		$('#search').click(function(){
+			var core_units = "<?php echo @$_SESSION['filled_units']; ?>";
+			var search_url = 'load-search-unit.php?array=(' + core_units + ')&input=' + $('#searchCourse').val();
+			load_units(search_url);
+		});
+		$('#search').click();
+		
 	});
-
+	
+	// Load units from search
+	function load_units(url)
+	{
+		$("#search_result").empty();
+		console.log(url);
+		$.getJSON(url,null,function(data) {
+			if(!data.length)
+				$("#search_result").append('<tr><td><div>Searched unit is not found or already in Core units.</div></td></tr>');
+			else {
+				$.each(data, function(i,obj)
+				{
+					var result_unit = '<tr><td><div id="' + obj["Unit_Code"] + '" class="item"><span class="hidden"><img class="cross" onClick="return removeFromTable(this);" src="images/cross.png"></span>' + obj['Unit_Code'] + ' - ' + obj['Unit_Title'] + '</div></td><td><a href="#" onClick="javascript:newWindow(' + obj["Unit_Code"] + ');" class="view-detail">View Detail</a></td></tr>';
+					console.log(result_unit);
+					$("#search_result").append(result_unit);
+					
+					$("#search_count").text(i+1 + " Search Results");
+					
+					$('#search_result .item').draggable({
+						revert:true,
+						proxy:'clone'
+					});
+				});
+			}
+		});
+	}
 </script>
 
 <?php
