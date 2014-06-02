@@ -113,7 +113,7 @@ input#searchCourse {
 div.course-info {
 	font-size: 16px;
 	line-height: 24px;
-	padding: 10px 0;
+	padding-bottom: 10px;
 }
 
 div.search-unit {
@@ -171,7 +171,7 @@ div.left table {
 border: none;
 }
 div.left-sidebar .left {
-height: 447px;
+height: 460px;
 overflow: auto;
 border: 1px solid #aaa;
 }
@@ -181,9 +181,12 @@ border: 1px solid #aaa;
 	border: 1px solid #aaa;
 }
 
-span#course-status {
+span.incomplete {
 	color: #f00;
 	font-weight: bold;
+}
+span.incomplete.complete {
+	color: #06E000;
 }
 
 div.button-right {

@@ -18,7 +18,6 @@
 				//alert("load-course-major.php?course_code=" + $('#courseSelection').val());
 				load_course_major('load-course-major.php?course_code=' + $('#courseSelection').val());
 			});
-			
 		});
 		
 		// Load courses offered by selected campus

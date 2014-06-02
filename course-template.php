@@ -84,7 +84,7 @@
 			</table>
 		</div>
 		<p><?php echo $search_results . " Search Results"; ?></p>
-		<p>Course Status: <span id="course-status">Incomplete</span></p>
+		<p>Course Status: <span id="course-status" class="incomplete">Incomplete</span></p>
 	</div>
 	
 	<div class="page-main">
@@ -254,6 +254,14 @@
 	function updateCreditPoints(delta) {
 		var newval = parseInt($("#creditpoints").text()) + parseInt(delta);
 		$("#creditpoints").text(newval);
+		if(newval >= 17) {
+			$("#course-status").text("Complete");
+			$("#course-status").addClass("complete");
+		}
+		else {
+			$("#course-status").text("Incomplete");
+			$("#course-status").removeClass('complete');
+		}
 	}
 	
 	$(function(){
